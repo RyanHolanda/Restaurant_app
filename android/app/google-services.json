@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "188973722097",
+    "project_id": "black-beard-burguer-406f0",
+    "storage_bucket": "black-beard-burguer-406f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188973722097:android:9f794ead28fda33851fc50",
+        "android_client_info": {
+          "package_name": "com.example.car_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "188973722097-ald4ctv7a24legkcl3itqh1orv6pcghb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO4p-NS6SgfvofVwuuV1Y1orPubjIkwC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "188973722097-ald4ctv7a24legkcl3itqh1orv6pcghb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "188973722097-ghj1qmtv4raur3gngm7c9gihenalhf7t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.carApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
