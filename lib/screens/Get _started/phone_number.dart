@@ -1,7 +1,6 @@
 import 'package:car_app/auth/auth_error.dart';
 import 'package:car_app/blocs/app_bloc.dart';
 import 'package:car_app/screens/Get%20_started/text_controllers/text_controllers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +9,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PhoneRegistrationScreen extends StatefulWidget {
-  PhoneRegistrationScreen({super.key});
+  const PhoneRegistrationScreen({super.key});
 
   @override
   State<PhoneRegistrationScreen> createState() =>
@@ -51,7 +50,7 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text('Ok'))
+                          child: const Text('Ok'))
                     ],
                   ));
         }
@@ -198,10 +197,10 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 25, top: 15),
+                    padding: const EdgeInsets.only(left: 25, top: 15),
                     child: Text(
                       invalidPhone,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.red),
                     ),
                   )

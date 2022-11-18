@@ -12,7 +12,7 @@ import 'package:page_transition/page_transition.dart';
 import '../../blocs/app_bloc.dart';
 
 class EmailRegisterScreen extends StatefulWidget {
-  EmailRegisterScreen({super.key});
+  const EmailRegisterScreen({super.key});
 
   @override
   State<EmailRegisterScreen> createState() => _EmailRegisterScreenState();
@@ -33,7 +33,7 @@ class _EmailRegisterScreenState extends State<EmailRegisterScreen> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text('Ok'))
+                          child: const Text('Ok'))
                     ],
                   ));
         }
@@ -70,7 +70,7 @@ class _EmailRegisterScreenState extends State<EmailRegisterScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 20, right: 10),
+                padding: const EdgeInsets.only(left: 20, right: 10),
                 child: Row(
                   children: [
                     SizedBox(
@@ -122,7 +122,7 @@ class _EmailRegisterScreenState extends State<EmailRegisterScreen> {
                             Navigator.push(
                                 context,
                                 PageTransition(
-                                    child: PasswordRegisterScreen(),
+                                    child: const PasswordRegisterScreen(),
                                     type: PageTransitionType.fade));
                           } else {
                             setState(() {
@@ -145,11 +145,11 @@ class _EmailRegisterScreenState extends State<EmailRegisterScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 25, top: 15),
+                padding: const EdgeInsets.only(left: 25, top: 15),
                 child: Text(
                   authErrorRegisterEmail,
                   style:
-                      TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                      const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
                 ),
               ),
               Padding(
@@ -184,7 +184,7 @@ class _EmailRegisterScreenState extends State<EmailRegisterScreen> {
                 alignment: Alignment.center,
                 child: Container(
                   decoration: BoxDecoration(
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.black, blurRadius: 0.1)
                       ],
                       borderRadius: BorderRadius.circular(10),
@@ -203,7 +203,7 @@ class _EmailRegisterScreenState extends State<EmailRegisterScreen> {
                               Logos.google,
                               size: 20,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Text(

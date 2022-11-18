@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 
 class PasswordRegisterScreen extends StatefulWidget {
-  PasswordRegisterScreen({super.key});
+  const PasswordRegisterScreen({super.key});
 
   @override
   State<PasswordRegisterScreen> createState() => _PasswordRegisterScreenState();
@@ -45,7 +45,7 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 20, right: 10),
+              padding: const EdgeInsets.only(left: 20, right: 10),
               child: Row(
                 children: [
                   SizedBox(
@@ -106,7 +106,7 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
                           Navigator.push(
                               context,
                               PageTransition(
-                                  child: PhoneRegistrationScreen(),
+                                  child: const PhoneRegistrationScreen(),
                                   type: PageTransitionType.fade));
                           setState(() {
                             authErrorRegisterPassword = '';
@@ -127,11 +127,11 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 25, top: 15),
+              padding: const EdgeInsets.only(left: 25, top: 15),
               child: Text(
                 authErrorRegisterPassword,
                 style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                    const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
               ),
             ),
           ],

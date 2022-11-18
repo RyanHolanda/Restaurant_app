@@ -2,7 +2,6 @@ import 'package:car_app/auth/auth.dart';
 import 'package:car_app/blocs/app_bloc.dart';
 import 'package:car_app/screens/Home/home.dart';
 import 'package:car_app/screens/Welcome/welcome.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,9 +53,9 @@ class MyApp extends StatelessWidget {
                 brightness: Brightness.dark,
                 tertiary: Colors.grey.shade900,
                 onTertiary: Colors.grey.shade600,
-                primary: Color.fromARGB(255, 255, 255, 255),
+                primary: const Color.fromARGB(255, 255, 255, 255),
                 onPrimary: Colors.grey.shade900,
-                secondary: Color.fromARGB(255, 0, 0, 0),
+                secondary: const Color.fromARGB(255, 0, 0, 0),
                 onSecondary: const Color.fromARGB(255, 255, 255, 255),
                 error: Colors.red,
                 onError: Colors.red,
@@ -78,16 +77,15 @@ class MyApp extends StatelessWidget {
             builder: (context, snapshot) {
               return BlocBuilder<AppBloc, AppState>(builder: (context, state) {
                 if (state is AppStateLoggedIn || snapshot.hasData) {
-                  return HomeScreen();
+                  return const HomeScreen();
                 }
                 if (state is AppStateLoggedOut ||
                     state is AppStateAuthError ||
                     state is AppStateSendResetEmail) {
-                  return WelcomeScreen();
+                  return const WelcomeScreen();
                 } else {
                   return Container();
                 }
-                ;
               });
             }),
       ),

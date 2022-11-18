@@ -7,12 +7,10 @@ abstract class HomeState extends Equatable {
 
 class HomeStatePickUp extends HomeState {
   @override
-  // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 }
 
 class HomeStateDelivery extends HomeState {
   @override
-  // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 }
