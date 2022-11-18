@@ -7,35 +7,32 @@ abstract class AppState extends Equatable {
 }
 
 class AppStateLoggedIn extends AppState {
-  AppStateLoggedIn({required isLoading}) : super(isLoading: isLoading);
+  const AppStateLoggedIn({required isLoading}) : super(isLoading: isLoading);
 
   @override
-  // TODO: implement props
   List<Object?> get props => [isLoading, authError];
 }
 
 class AppStateLoggedOut extends AppState {
-  AppStateLoggedOut({required isLoading}) : super(isLoading: isLoading);
+  const AppStateLoggedOut({required isLoading}) : super(isLoading: isLoading);
 
   @override
-  // TODO: implement props
   List<Object?> get props => [isLoading, authError];
 }
 
 class AppStateAuthError extends AppState {
-  AppStateAuthError({required isLoading, String? authError})
+  const AppStateAuthError({required isLoading, String? authError})
       : super(isLoading: isLoading, authError: authError);
 
+
   @override
-  // TODO: implement props
   List<Object?> get props => [isLoading, authError];
 }
 
 class AppStateSendResetEmail extends AppState {
-  AppStateSendResetEmail({required isLoading})
+  const AppStateSendResetEmail({required isLoading})
       : super(isLoading: isLoading);
 
   @override
-  // TODO: implement props
   List<Object?> get props => [isLoading];
 }

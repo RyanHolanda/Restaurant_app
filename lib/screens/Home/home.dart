@@ -1,3 +1,4 @@
+
 import 'package:car_app/auth/auth.dart';
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
 import 'package:car_app/screens/Home/widgets/appbar.dart';
@@ -78,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                                       alignment: Alignment.centerRight,
                                       child: IconButton(
                                           onPressed: () {},
-                                          icon: Icon(Icons.navigate_next)),
+                                          icon: const Icon(Icons.navigate_next)),
                                     ),
                                   )
                                 ],
@@ -137,7 +138,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         );
                       }
-                      return SizedBox.shrink();
+                      return const SizedBox.shrink();
                     }),
                     Padding(
                       padding:
@@ -149,7 +150,7 @@ class HomeScreen extends StatelessWidget {
                           height: 60,
                           child: TextField(
                             decoration: InputDecoration(
-                                suffixIcon: Icon(Icons.search),
+                                suffixIcon: const Icon(Icons.search),
                                 hintText:
                                     'Brutinho  •  Green Beard  •  Cheddar...',
                                 hintStyle: TextStyle(
@@ -177,12 +178,12 @@ class HomeScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: 170,
                       child: Padding(
                           padding: const EdgeInsets.only(left: 5, top: 20),
                           child: ListView.builder( 
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             itemCount: 3,
                             itemBuilder: (context, index) {

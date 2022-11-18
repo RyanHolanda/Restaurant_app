@@ -6,9 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class ForgotPasswordScreen extends StatelessWidget {
   ForgotPasswordScreen({super.key});
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text('Ok'))
+                          child: const Text('Ok'))
                     ],
                   ));
         }
@@ -44,7 +45,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Ok'))
+                    child: const Text('Ok'))
               ],
               content: Text(AppLocalizations.of(context)!
                   .emailSucessfullySentDialogContent),
@@ -83,7 +84,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20),
+                    padding: const EdgeInsets.only(left: 20, right: 20),
                     child: SizedBox(
                       height: 60,
                       width: MediaQuery.of(context).size.width,
@@ -132,7 +133,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                                     context.read<AppBloc>().add(
                                         AppEventResetPassword(
                                             email: _emailController.text));
-                                    print(_emailController.text);
                                   },
                                   child: Text(
                                     AppLocalizations.of(context)!.sendEmail,

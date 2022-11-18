@@ -2,7 +2,6 @@ import 'package:car_app/screens/Get%20_started/email_screen.dart';
 import 'package:car_app/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -53,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 34, right: 34, top: 34),
                 child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -105,7 +104,7 @@ class WelcomeScreen extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     PageTransition(
-                                        child: EmailRegisterScreen(),
+                                        child: const EmailRegisterScreen(),
                                         type: PageTransitionType.fade));
                               },
                               child: Text(
@@ -127,7 +126,7 @@ class WelcomeScreen extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   PageTransition(
-                                      child: LoginScreen(),
+                                      child: const LoginScreen(),
                                       type: PageTransitionType.fade));
                             },
                             child: Text(

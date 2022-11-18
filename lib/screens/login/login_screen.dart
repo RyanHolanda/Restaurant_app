@@ -20,8 +20,8 @@ class LoginScreen extends StatefulWidget {
 bool _visiblePassword = true;
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocListener<AppBloc, AppState>(
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
+                      padding: const EdgeInsets.only(left: 20, right: 20),
                       child: SizedBox(
                         height: 60,
                         width: MediaQuery.of(context).size.width,
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 20, top: 10, right: 20),
+                      padding: const EdgeInsets.only(left: 20, top: 10, right: 20),
                       child: SizedBox(
                         height: 60,
                         width: MediaQuery.of(context).size.width,
@@ -281,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Logos.google,
                                     size: 20,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Text(

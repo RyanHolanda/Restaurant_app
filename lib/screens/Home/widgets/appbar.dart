@@ -19,13 +19,13 @@ class MyAppBar extends StatelessWidget {
         return AppBar(
           title: Align(
             alignment: Alignment.center,
-            child: Container(
+            child: SizedBox(
               width: 200,
               height: 50,
               child: Stack(
                 children: [
                   AnimatedAlign(
-                    duration: Duration(milliseconds: 100),
+                    duration: const Duration(milliseconds: 100),
                     alignment: state is HomeStateDelivery
                         ? Alignment.centerLeft
                         : Alignment.centerRight,

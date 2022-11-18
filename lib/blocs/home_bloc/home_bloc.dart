@@ -1,3 +1,4 @@
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +12,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       try{
         emit(HomeStatePickUp());
       } catch (e){
-        print(e);
         rethrow;
       }
     });
@@ -19,7 +19,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       try{
         emit(HomeStateDelivery());
       } catch (e){
-        print(e);
         rethrow;
       }
       

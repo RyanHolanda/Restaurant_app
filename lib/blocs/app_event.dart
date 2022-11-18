@@ -27,7 +27,6 @@ class AppEventRegister extends AppEvent{
 
   class AppEventEnterWithGoogle extends AppEvent{
   @override
-  // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
   }
 

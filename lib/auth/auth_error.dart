@@ -26,12 +26,12 @@ class AuthError {
   const AuthError({required this.text});
 
   factory AuthError.from(FirebaseAuthException exception) =>
-  authErrorMapping[exception.code.toLowerCase().trim()] ?? AuthErrorUnknown();
+  authErrorMapping[exception.code.toLowerCase().trim()] ?? const AuthErrorUnknown();
 }
 
 @immutable
 class AuthErrorUnknown extends AuthError {
-   AuthErrorUnknown()
+   const AuthErrorUnknown()
       : super(
          text: 'Unknown error'
         );
