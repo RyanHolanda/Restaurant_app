@@ -1,15 +1,19 @@
-
 import 'package:car_app/auth/auth.dart';
+import 'package:car_app/blocs/app_bloc.dart';
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
 import 'package:car_app/screens/Home/widgets/appbar.dart';
+import 'package:car_app/screens/Home/widgets/items_list.dart';
+import 'package:car_app/screens/Home/widgets/most_ordered_list.dart';
+import 'package:car_app/screens/Home/widgets/pick_up_adress.dart';
+import 'package:car_app/screens/Home/widgets/user_adress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+  ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,193 +25,46 @@ class HomeScreen extends StatelessWidget {
           return GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Scaffold(
+              floatingActionButton: FloatingActionButton(
+                  backgroundColor: Colors.amber,
+                  onPressed: () =>
+                      context.read<AppBloc>().add(AppEventSignOut())),
               appBar: const PreferredSize(
-                  preferredSize: Size.fromHeight(100), child: MyAppBar()),
+                  preferredSize: Size.fromHeight(70), child: MyAppBar()),
               body: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                controller: _scrollController,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     LayoutBuilder(builder: (p0, p1) {
                       if (state is HomeStateDelivery) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: GestureDetector(
-                            child: SizedBox(
-                              child: Row(
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 20, left: 20, right: 20),
-                                    child: Icon(FontAwesome.bicycle),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 20),
-                                        child: Text(
-                                          AppLocalizations.of(context)!
-                                              .receiveYourOrderIn30m1h,
-                                          style: GoogleFonts.inriaSans(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onTertiary,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 5),
-                                        child: SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            'Rua orindiuva - Jardim Elzinha 32, APTo 52 Bloco G',
-                                            style: GoogleFonts.inriaSans(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 20, left: 5),
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(Icons.navigate_next)),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
+                        return const UserAdress();
                       }
                       if (state is HomeStatePickUp) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: GestureDetector(
-                            child: SizedBox(
-                              child: Row(
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 20, left: 20, right: 20),
-                                    child: Icon(FontAwesome.shop),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 20),
-                                        child: Text(
-                                          AppLocalizations.of(context)!
-                                              .pickUpAdress,
-                                          style: GoogleFonts.inriaSans(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onTertiary,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 5),
-                                        child: SizedBox(
-                                          width: 210,
-                                          child: Text(
-                                            'Rua Orindiuva - Jardim Elzinha 28',
-                                            style: GoogleFonts.inriaSans(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
+                        return const PickUpAdress();
                       }
                       return const SizedBox.shrink();
                     }),
+                    const SearchBox(),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 50, left: 20, right: 20),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 60,
-                          child: TextField(
-                            decoration: InputDecoration(
-                                suffixIcon: const Icon(Icons.search),
-                                hintText:
-                                    'Brutinho  •  Green Beard  •  Cheddar...',
-                                hintStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onTertiary),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(9),
-                                    borderSide: BorderSide.none),
-                                filled: true,
-                                fillColor:
-                                    Theme.of(context).colorScheme.onPrimary),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, top: 50),
+                      padding: const EdgeInsets.only(left: 20, top: 20),
                       child: Text(
                         AppLocalizations.of(context)!.mostordered,
                         style: GoogleFonts.inriaSans(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
-                    SizedBox(
-                      height: 170,
-                      child: Padding(
-                          padding: const EdgeInsets.only(left: 5, top: 20),
-                          child: ListView.builder( 
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 3,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(18),
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary),
-                                  height: 70,
-                                  width: 150,
-                                  child: Column(
-                                    children: const [
-
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          )),
+                    const MostOrderedBurguersList(),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15, top: 20),
+                      child: Text(
+                        AppLocalizations.of(context)!.menu,
+                        style: GoogleFonts.inriaSans(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
                     ),
+                    ItemsList(scrollController: _scrollController),
                   ],
                 ),
               ),
@@ -218,3 +75,55 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class SearchBox extends StatelessWidget {
+  const SearchBox({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 50, left: 15, right: 15),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 60,
+          child: TextField(
+            decoration: InputDecoration(
+                suffixIcon: const Icon(Icons.search),
+                hintText: 'Brutinho  •  Green Beard  •  Cheddar...',
+                hintStyle:
+                    TextStyle(color: Theme.of(context).colorScheme.onTertiary),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9),
+                    borderSide: BorderSide.none),
+                filled: true,
+                fillColor: Theme.of(context).colorScheme.onPrimary),
+          ),
+        ),
+      ),
+    );
+  }
+}
+

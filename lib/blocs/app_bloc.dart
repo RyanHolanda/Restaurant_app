@@ -2,6 +2,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:car_app/auth/auth.dart';
 import 'package:car_app/auth/auth_error.dart';
+import 'package:car_app/models/items_model.dart';
+import 'package:car_app/models/store_status_model.dart';
+import 'package:car_app/repos/items_repository.dart';
+import 'package:car_app/repos/store_status_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,11 +23,25 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             email: event.email,
             password: event.password,
             phoneNumber: event.phoneNumber);
-        emit(const AppStateLoggedIn(isLoading: false));
+        add(AppEventGetData());
       } on FirebaseAuthException catch (e) {
         emit(AppStateAuthError(
             isLoading: false, authError: AuthError.from(e).text));
         authErrorRegister = state.authError.toString();
+      }
+    });
+
+    on<AppEventGetData>((event, emit) async {
+      emit(const AppStateLoggedIn(isLoading: true));
+      try {
+        final items = await ItemsRepository().getItems();
+        itemsList = items;
+        final storeS =await StoreStatusRepo().getStoreStatus();
+        storeStatus = storeS;
+        emit(const AppStateLoggedIn(isLoading: false));
+      } catch (e) {
+        print(e);
+        add(AppEventGetData());
       }
     });
 
@@ -34,7 +52,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           email: event.email,
           password: event.password,
         );
-        emit(const AppStateLoggedIn(isLoading: false));
+        add(AppEventGetData());
       } on FirebaseAuthException catch (e) {
         emit(AppStateAuthError(
             isLoading: false, authError: AuthError.from(e).text));
@@ -54,9 +72,15 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(const AppStateLoggedOut(isLoading: true));
       try {
         await Auth().signInWithGoogle();
-        emit(const AppStateLoggedIn(isLoading: false));
+        final user = Auth().currentUser;
+        if (user?.uid == null) {
+          throw FirebaseAuthException(code: 'Unknown error');
+        } else {
+          add(AppEventGetData());
+        }
       } on FirebaseAuthException catch (e) {
-        emit(AppStateAuthError(isLoading: false, authError: AuthError.from(e).text));
+        emit(AppStateAuthError(
+            isLoading: false, authError: AuthError.from(e).text));
         authErrorLogin = state.authError.toString();
         authErrorRegister = state.authError.toString();
       }
@@ -68,7 +92,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         await Auth().sendPasswordResetEmail(email: event.email);
         emit(const AppStateSendResetEmail(isLoading: false));
       } on FirebaseAuthException catch (e) {
-        emit(AppStateAuthError(isLoading: false, authError: AuthError.from(e).text));
+        emit(AppStateAuthError(
+            isLoading: false, authError: AuthError.from(e).text));
         authErrorResetPassword = state.authError.toString();
       }
     });

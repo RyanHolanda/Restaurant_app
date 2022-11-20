@@ -29,6 +29,7 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
             authErrorRegister = AppLocalizations.of(context)!.invalidEmail;
             Navigator.pop(context);
             Navigator.pop(context);
+            Navigator.pop(context);
             break;
           case 'Unkwnown error':
             authErrorRegister = AppLocalizations.of(context)!.unknownError;

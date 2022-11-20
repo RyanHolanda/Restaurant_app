@@ -1,6 +1,8 @@
 import 'package:car_app/auth/auth.dart';
 import 'package:car_app/blocs/app_bloc.dart';
+import 'package:car_app/repos/items_repository.dart';
 import 'package:car_app/screens/Home/home.dart';
+import 'package:car_app/screens/Loading/loading_screen.dart';
 import 'package:car_app/screens/Welcome/welcome.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +24,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
+        statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.transparent));
     return BlocProvider(
@@ -33,6 +36,7 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: Colors.white,
             colorScheme: ColorScheme(
                 brightness: Brightness.light,
+                secondaryContainer: Colors.white,
                 primary: const Color.fromARGB(255, 0, 0, 0),
                 onPrimary: Colors.grey.shade300,
                 secondary: Colors.white,
@@ -48,14 +52,15 @@ class MyApp extends StatelessWidget {
                 onSurface: const Color.fromARGB(255, 255, 255, 255))),
         darkTheme: ThemeData(
             brightness: Brightness.dark,
-            scaffoldBackgroundColor: Colors.black,
+            scaffoldBackgroundColor: Color.fromARGB(255, 13, 13, 13),
             colorScheme: ColorScheme(
                 brightness: Brightness.dark,
+                secondaryContainer: Colors.grey.shade900,
                 tertiary: Colors.grey.shade900,
                 onTertiary: Colors.grey.shade600,
                 primary: const Color.fromARGB(255, 255, 255, 255),
                 onPrimary: Colors.grey.shade900,
-                secondary: const Color.fromARGB(255, 0, 0, 0),
+                secondary: const Color.fromARGB(255, 13, 13, 13),
                 onSecondary: const Color.fromARGB(255, 255, 255, 255),
                 error: Colors.red,
                 onError: Colors.red,
@@ -75,9 +80,16 @@ class MyApp extends StatelessWidget {
         home: StreamBuilder(
             stream: Auth().authStateChanges,
             builder: (context, snapshot) {
+              if(snapshot.hasData){
+                context.read<AppBloc>().add(AppEventGetData());
+              }
               return BlocBuilder<AppBloc, AppState>(builder: (context, state) {
-                if (state is AppStateLoggedIn || snapshot.hasData) {
-                  return const HomeScreen();
+                if (state is AppStateLoggedIn) {
+                  if (state.isLoading == true) {
+                    return const LoadingScreen();
+                  } else {
+                    return HomeScreen();
+                  }
                 }
                 if (state is AppStateLoggedOut ||
                     state is AppStateAuthError ||

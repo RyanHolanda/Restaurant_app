@@ -5,43 +5,49 @@ abstract class AppEvent extends Equatable {
 }
 
 @immutable
-class AppEventlogIn extends AppEvent{
+class AppEventGetData extends AppEvent {
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
+
+@immutable
+class AppEventlogIn extends AppEvent {
   final String email;
   final String password;
   const AppEventlogIn({required this.email, required this.password});
-  
+
   @override
   List<Object?> get props => [email, password];
-  }
+}
 
 @immutable
-class AppEventRegister extends AppEvent{
+class AppEventRegister extends AppEvent {
   final int phoneNumber;
   final String email;
   final String password;
-  const AppEventRegister({required this.email, required this.password, required this.phoneNumber});
-  
+  const AppEventRegister(
+      {required this.email, required this.password, required this.phoneNumber});
+
   @override
   List<Object?> get props => [email, password, phoneNumber];
-  }
+}
 
-  class AppEventEnterWithGoogle extends AppEvent{
+class AppEventEnterWithGoogle extends AppEvent {
   @override
   List<Object?> get props => throw UnimplementedError();
-  }
+}
 
-    @immutable
-class AppEventSignOut extends AppEvent{
-  
+@immutable
+class AppEventSignOut extends AppEvent {
   @override
   List<Object?> get props => [];
-  }
+}
 
-    @immutable
-class AppEventResetPassword extends AppEvent{
+@immutable
+class AppEventResetPassword extends AppEvent {
   final String email;
   const AppEventResetPassword({required this.email});
-  
+
   @override
   List<Object?> get props => [email];
-  }
+}
