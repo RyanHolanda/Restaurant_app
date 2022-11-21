@@ -1,4 +1,4 @@
-import 'package:car_app/auth/auth.dart';
+import 'package:car_app/firebase/auth/auth.dart';
 import 'package:car_app/blocs/app_bloc.dart';
 import 'package:car_app/repos/items_repository.dart';
 import 'package:car_app/screens/Home/home.dart';

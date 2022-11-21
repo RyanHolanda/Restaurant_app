@@ -1,7 +1,8 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
-import 'package:car_app/auth/auth.dart';
-import 'package:car_app/auth/auth_error.dart';
+import 'package:car_app/firebase/auth/auth.dart';
+import 'package:car_app/firebase/auth/auth_error.dart';
+import 'package:car_app/firebase/storage/add_user_data.dart';
 import 'package:car_app/models/items_model.dart';
 import 'package:car_app/models/store_status_model.dart';
 import 'package:car_app/repos/items_repository.dart';
@@ -23,6 +24,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             email: event.email,
             password: event.password,
             phoneNumber: event.phoneNumber);
+            Database().addUserNumber(event.phoneNumber);
         add(AppEventGetData());
       } on FirebaseAuthException catch (e) {
         emit(AppStateAuthError(

@@ -1,4 +1,4 @@
-import 'package:car_app/auth/auth.dart';
+import 'package:car_app/firebase/auth/auth.dart';
 import 'package:car_app/blocs/app_bloc.dart';
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
 import 'package:car_app/screens/Home/widgets/appbar.dart';
@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
               appBar: const PreferredSize(
                   preferredSize: Size.fromHeight(70), child: MyAppBar()),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics:  const BouncingScrollPhysics(),
                 controller: _scrollController,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,4 +1,5 @@
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
+import 'package:car_app/firebase/storage/add_user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,7 +17,9 @@ class MyAppBar extends StatelessWidget {
       builder: (context, state) {
         return AppBar(
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Database().addUserAdress('orindiuva');
+            },
             icon: Icon(
               BoxIcons.bx_menu_alt_left,
               size: 28,
@@ -27,7 +30,9 @@ class MyAppBar extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 15),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Database().printUserAdress();
+                },
                 icon: Icon(
                   Bootstrap.cart_dash,
                   color: Theme.of(context).colorScheme.primary,

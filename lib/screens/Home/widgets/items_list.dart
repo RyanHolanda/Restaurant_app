@@ -95,7 +95,7 @@ class ItemsList extends StatelessWidget {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15 ),
               child: Divider(),
             )
           ],

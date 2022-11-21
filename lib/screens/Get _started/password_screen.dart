@@ -1,4 +1,4 @@
-import 'package:car_app/auth/auth_error.dart';
+import 'package:car_app/firebase/auth/auth_error.dart';
 import 'package:car_app/screens/Get%20_started/text_controllers/text_controllers.dart';
 import 'package:car_app/screens/Get%20_started/phone_number.dart';
 import 'package:flutter/material.dart';

@@ -16,7 +16,6 @@ const Map<String, AuthError> authErrorMapping = {
   'wrong-password': AuthErrorWrongPassword(),
   'too-many-requests': AutherrorTooManyRequests(),
   'invalid-email': AuthErrorInvalidEmail()
-
 };
 
 @immutable

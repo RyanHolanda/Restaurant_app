@@ -7,7 +7,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../auth/auth_error.dart';
+import '../../firebase/auth/auth_error.dart';
 import '../../blocs/app_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
