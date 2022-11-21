@@ -21,7 +21,28 @@ class Database {
     FirebaseFirestore.instance
         .collection('Users')
         .doc(user!.email)
-        .update({'adress': adress});
+        .update({'adress': adress}).catchError((err) {
+      if (err.code == 'not-found') {
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user!.email)
+            .set({'adress': adress});
+      }
+    });
+  }
+
+  Future updateUserNumber(phone) async {
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.email)
+        .update({'phone': phone}).catchError((err) {
+      if (err.code == 'not-found') {
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user!.email)
+            .set({'adress': phone});
+      }
+    });
   }
 
   printUserAdress() async {
