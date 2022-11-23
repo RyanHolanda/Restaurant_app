@@ -19,6 +19,8 @@ class AdressModel {
   }
 }
 
+String? userAdressModelString;
+
 
 
 

@@ -1,4 +1,3 @@
-import 'package:car_app/firebase/storage/storage_error.dart';
 import 'package:car_app/models/adress_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,7 +44,7 @@ class Database {
     });
   }
 
-  printUserAdress() async {
+  Future getUserAdress() async {
     final ref = FirebaseFirestore.instance
         .collection('Users')
         .doc(user!.email)
@@ -56,9 +55,10 @@ class Database {
     final docSnap = await ref.get();
     final userAdress = docSnap.data();
     if (userAdress != null) {
-      print(userAdress.userAdress);
+      userAdressModelString = userAdress.userAdress;
     } else {
-      print('No such document');
+      userAdressModelString = null;
+      getUserAdress();
     }
   }
 }

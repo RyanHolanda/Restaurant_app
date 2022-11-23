@@ -40,6 +40,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         itemsList = items;
         final storeS =await StoreStatusRepo().getStoreStatus();
         storeStatus = storeS;
+        await Database().getUserAdress();
         emit(const AppStateLoggedIn(isLoading: false));
       } catch (e) {
         print(e);

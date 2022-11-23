@@ -18,7 +18,6 @@ class MyAppBar extends StatelessWidget {
         return AppBar(
           leading: IconButton(
             onPressed: () {
-              Database().addUserAdress('orindiuva');
             },
             icon: Icon(
               BoxIcons.bx_menu_alt_left,
@@ -31,7 +30,6 @@ class MyAppBar extends StatelessWidget {
               padding: const EdgeInsets.only(right: 15),
               child: IconButton(
                 onPressed: () {
-                  Database().printUserAdress();
                 },
                 icon: Icon(
                   Bootstrap.cart_dash,
