@@ -1,17 +1,20 @@
+import 'package:car_app/blocs/cart_bloc/cart_bloc.dart';
 import 'package:car_app/models/items_model.dart';
 import 'package:car_app/screens/Home/widgets/selected_item_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class ItemsList extends StatelessWidget {
-  const ItemsList({
+  ItemsList({
     Key? key,
+    required this.homeState,
     required ScrollController scrollController,
   })  : _scrollController = scrollController,
         super(key: key);
-
+  String homeState;
   final ScrollController _scrollController;
 
   @override
@@ -32,6 +35,7 @@ class ItemsList extends StatelessWidget {
                     context,
                     PageTransition(
                         child: SelectedItemScreen(
+                          homeState: homeState,
                           paused: itemsList[index].paused,
                           price: double.parse(
                               itemsList[index].price.replaceAll(',', '.')),
@@ -63,8 +67,9 @@ class ItemsList extends StatelessWidget {
                               maxLines: 3,
                               style: GoogleFonts.inriaSans(
                                   fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.onTertiary),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onTertiary),
                               overflow: TextOverflow.ellipsis,
                             )),
                         Padding(
@@ -95,7 +100,7 @@ class ItemsList extends StatelessWidget {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15 ),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: Divider(),
             )
           ],

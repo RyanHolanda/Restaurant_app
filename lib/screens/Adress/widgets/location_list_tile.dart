@@ -23,7 +23,9 @@ class LocationListTile extends StatelessWidget {
                 location,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Theme.of(context).colorScheme.onTertiary, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onTertiary,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),

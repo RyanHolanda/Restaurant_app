@@ -6,9 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class MostOrderedBurguersList extends StatelessWidget {
-  const MostOrderedBurguersList({
+   MostOrderedBurguersList({
+    required this.homeState,
     Key? key,
   }) : super(key: key);
+
+  String homeState;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +38,7 @@ class MostOrderedBurguersList extends StatelessWidget {
                         context,
                         PageTransition(
                             child: SelectedItemScreen(
+                              homeState: homeState,
                               paused: itemsList[index].paused,
                               price: double.parse(
                                   itemsList[index].price.replaceAll(',', '.')),

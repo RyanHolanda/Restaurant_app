@@ -1,10 +1,12 @@
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
 import 'package:car_app/firebase/storage/add_user_data.dart';
+import 'package:car_app/screens/Cart/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:page_transition/page_transition.dart';
 
 class MyAppBar extends StatelessWidget {
   const MyAppBar({
@@ -17,8 +19,7 @@ class MyAppBar extends StatelessWidget {
       builder: (context, state) {
         return AppBar(
           leading: IconButton(
-            onPressed: () {
-            },
+            onPressed: () {},
             icon: Icon(
               BoxIcons.bx_menu_alt_left,
               size: 28,
@@ -30,6 +31,15 @@ class MyAppBar extends StatelessWidget {
               padding: const EdgeInsets.only(right: 15),
               child: IconButton(
                 onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: CartScreen(
+                            homeState: state is HomeStateDelivery
+                                ? 'Delivery'
+                                : 'Pick Up',
+                          ),
+                          type: PageTransitionType.rightToLeftWithFade));
                 },
                 icon: Icon(
                   Bootstrap.cart_dash,

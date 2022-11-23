@@ -1,3 +1,4 @@
+import 'package:car_app/blocs/cart_bloc/cart_bloc.dart';
 import 'package:car_app/firebase/auth/auth.dart';
 import 'package:car_app/blocs/app_bloc.dart';
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
@@ -32,7 +33,7 @@ class HomeScreen extends StatelessWidget {
               appBar: const PreferredSize(
                   preferredSize: Size.fromHeight(70), child: MyAppBar()),
               body: SingleChildScrollView(
-                physics:  const BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 controller: _scrollController,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +56,10 @@ class HomeScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
-                    const MostOrderedBurguersList(),
+                    MostOrderedBurguersList(
+                      homeState:
+                          state is HomeStateDelivery ? 'Delivery' : 'Pick Up',
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15, top: 20),
                       child: Text(
@@ -64,7 +68,14 @@ class HomeScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
-                    ItemsList(scrollController: _scrollController),
+                    BlocProvider(
+                      create: (context) => CartBloc(),
+                      child: ItemsList(
+                          scrollController: _scrollController,
+                          homeState: state is HomeStateDelivery
+                              ? 'Delivery'
+                              : 'Pick Up'),
+                    ),
                   ],
                 ),
               ),
@@ -75,22 +86,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class SearchBox extends StatelessWidget {
   const SearchBox({
@@ -126,4 +121,3 @@ class SearchBox extends StatelessWidget {
     );
   }
 }
-

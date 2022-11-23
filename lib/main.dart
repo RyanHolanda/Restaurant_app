@@ -1,6 +1,6 @@
+import 'package:car_app/blocs/cart_bloc/cart_bloc.dart';
 import 'package:car_app/firebase/auth/auth.dart';
 import 'package:car_app/blocs/app_bloc.dart';
-import 'package:car_app/repos/items_repository.dart';
 import 'package:car_app/screens/Home/home.dart';
 import 'package:car_app/screens/Loading/loading_screen.dart';
 import 'package:car_app/screens/Welcome/welcome.dart';
@@ -24,13 +24,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top]);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.transparent));
-    return BlocProvider(
-      create: (context) => AppBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AppBloc(),
+        ),
+        BlocProvider(
+          create: (context) => CartBloc(),
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
             scaffoldBackgroundColor: Colors.white,
@@ -80,7 +88,7 @@ class MyApp extends StatelessWidget {
         home: StreamBuilder(
             stream: Auth().authStateChanges,
             builder: (context, snapshot) {
-              if(snapshot.hasData){
+              if (snapshot.hasData) {
                 context.read<AppBloc>().add(AppEventGetData());
               }
               return BlocBuilder<AppBloc, AppState>(builder: (context, state) {

@@ -10,6 +10,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'dart:math';
 
+double distanceFromStore = 0.0;
+
 class ComplementAdressScreen extends StatefulWidget {
   const ComplementAdressScreen({super.key, required this.adrees});
 
@@ -22,8 +24,6 @@ class ComplementAdressScreen extends StatefulWidget {
 class _ComplementAdressScreenState extends State<ComplementAdressScreen> {
   late String catchNumber = widget.adrees.split(',')[1].split('-')[0];
   late int _number = 0;
-  double distanceFromStore = 0.0;
-
   TextEditingController complementController = TextEditingController();
 
   TextEditingController referenceController = TextEditingController();
@@ -99,12 +99,14 @@ class _ComplementAdressScreenState extends State<ComplementAdressScreen> {
                                 color:
                                     Theme.of(context).colorScheme.onTertiary),
                           ),
-                          SizedBox(height: 70,),
+                          const SizedBox(
+                            height: 70,
+                          ),
                           Image.network(
                             'https://cdn4.iconfinder.com/data/icons/feedback-1-2/48/2-512.png',
                             height: 200,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
                           Text(
@@ -247,6 +249,7 @@ class _ComplementAdressScreenState extends State<ComplementAdressScreen> {
                                   label: Text(AppLocalizations.of(context)!
                                       .saveAddress),
                                   onPressed: () async {
+                                    print(distanceFromStore);
                                     _number == 0
                                         ? const Text('data')
                                         : await Database().addUserAdress(
