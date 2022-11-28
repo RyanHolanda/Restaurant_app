@@ -101,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              width: 20,
+                              width: 5,
                             ),
                             IconButton(
                                 onPressed: () {
@@ -175,7 +175,7 @@ class ProfileScreen extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              width: 20,
+                              width: 5,
                             ),
                             IconButton(
                                 onPressed: () {
@@ -251,9 +251,7 @@ class ProfileScreen extends StatelessWidget {
                                                     milliseconds: 2000));
                                       },
                                       onChanged: (value) {
-                                        value.characters.length == 11
-                                            ? Database().updateUserNumber(value)
-                                            : null;
+                                        Database().getUserNumber();
                                       },
                                       controller: TextEditingController(
                                           text: userNumberModelString
@@ -283,7 +281,7 @@ class ProfileScreen extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              width: 20,
+                              width: 5,
                             ),
                             IconButton(
                                 onPressed: () {
@@ -304,47 +302,96 @@ class ProfileScreen extends StatelessWidget {
                         height: 60,
                         child: ElevatedButton.icon(
                             onPressed: () {
-                              showDialog(
+                              showModalBottomSheet(
                                 context: context,
-                                builder: (context) => CupertinoAlertDialog(
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text(
-                                          AppLocalizations.of(context)!.no,
+                                builder: (context) => Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height / 7,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .areYouSureYouWantToLogOut,
                                           style: GoogleFonts.inriaSans(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold),
-                                        )),
-                                    BlocBuilder<AppBloc, AppState>(
-                                      builder: (context, state) {
-                                        return TextButton(
-                                            onPressed: () async {
-                                              Future signOut() async {
-                                                context
-                                                    .read<AppBloc>()
-                                                    .add(AppEventSignOut());
-                                              }
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  border: Border.all(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary)),
+                                              height: 50,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.5,
+                                              child: MaterialButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .no,
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary),
+                                                  )),
+                                            ),
+                                            const SizedBox(
+                                              width: 15,
+                                            ),
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              child: SizedBox(
+                                                height: 50,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    2.5,
+                                                child: MaterialButton(
+                                                    color: Colors.red,
+                                                    onPressed: () async {
+                                                      Future signOut() async {
+                                                        context
+                                                            .read<AppBloc>()
+                                                            .add(
+                                                                AppEventSignOut());
+                                                      }
 
-                                              await signOut();
-                                              // ignore: use_build_context_synchronously
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text(
-                                              AppLocalizations.of(context)!.yes,
-                                              style: GoogleFonts.inriaSans(
-                                                  color: Colors.blue.shade700,
-                                                  fontWeight: FontWeight.bold),
-                                            ));
-                                      },
+                                                      await signOut();
+                                                      // ignore: use_build_context_synchronously
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .yes,
+                                                      style: const TextStyle(
+                                                          color: Colors.white),
+                                                    )),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
                                     ),
-                                  ],
-                                  content: Text(
-                                    AppLocalizations.of(context)!
-                                        .areYouSureYouWantToLogOut,
-                                    style: GoogleFonts.inriaSans(),
                                   ),
                                 ),
                               );

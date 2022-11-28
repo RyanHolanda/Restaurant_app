@@ -1,4 +1,5 @@
 import 'package:car_app/blocs/cart_bloc/cart_bloc.dart';
+import 'package:car_app/blocs/home_bloc/home_bloc.dart';
 import 'package:car_app/models/user_data_models.dart';
 import 'package:car_app/screens/Finish_Order/finish_order_screen.dart';
 import 'package:lottie/lottie.dart';
@@ -11,8 +12,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:page_transition/page_transition.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key, required this.homeState});
-  final String homeState;
+  const CartScreen({super.key});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -52,9 +52,7 @@ class _CartScreenState extends State<CartScreen> {
             ? const EmptyCartScreen()
             : Scaffold(
                 bottomNavigationBar: FinishOrderWidget(
-                    homeState: widget.homeState,
-                    shippingPrice: shippingPrice,
-                    total: total),
+                    shippingPrice: shippingPrice, total: total),
                 appBar: AppBar(
                   title: Text(
                     AppLocalizations.of(context)!.cart,
@@ -70,13 +68,17 @@ class _CartScreenState extends State<CartScreen> {
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(right: 15),
-                        child: Text(
-                          widget.homeState == 'Delivery'
-                              ? AppLocalizations.of(context)!.delivery
-                              : AppLocalizations.of(context)!.pickUp,
-                          style: GoogleFonts.inriaSans(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold),
+                        child: BlocBuilder<HomeBloc, HomeState>(
+                          builder: (context, state) {
+                            return Text(
+                              state is HomeStateDelivery
+                                  ? AppLocalizations.of(context)!.delivery
+                                  : AppLocalizations.of(context)!.pickUp,
+                              style: GoogleFonts.inriaSans(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -96,14 +98,12 @@ class _CartScreenState extends State<CartScreen> {
 class FinishOrderWidget extends StatelessWidget {
   const FinishOrderWidget({
     Key? key,
-    required this.homeState,
     required this.shippingPrice,
     required this.total,
   }) : super(key: key);
 
   final double shippingPrice;
   final double? total;
-  final String homeState;
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +144,6 @@ class FinishOrderWidget extends StatelessWidget {
                                 child: FinishOrderScreen(
                                   shippingPrice: shippingPrice,
                                   total: total,
-                                  homeState: homeState,
                                 ),
                                 type: PageTransitionType.bottomToTop));
                       },

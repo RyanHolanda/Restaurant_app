@@ -136,8 +136,7 @@ class _SelectedItemScreenState extends State<SelectedItemScreen> {
                                     Navigator.push(
                                         context,
                                         PageTransition(
-                                            child: CartScreen(
-                                                homeState: widget.homeState),
+                                            child: const CartScreen(),
                                             type: PageTransitionType
                                                 .rightToLeftWithFade));
                                   },

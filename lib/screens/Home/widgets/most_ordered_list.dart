@@ -17,7 +17,7 @@ class MostOrderedBurguersList extends StatelessWidget {
     return SizedBox(
       height: 170,
       child: Padding(
-          padding: const EdgeInsets.only(left: 5, top: 20),
+          padding: const EdgeInsets.only(top: 20),
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,

@@ -1,4 +1,4 @@
-import 'package:car_app/NavBar/Bottom_Nav_Bar.dart';
+import 'package:car_app/NavBar/bottom_nav_bar.dart';
 import 'package:car_app/blocs/cart_bloc/cart_bloc.dart';
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
 import 'package:car_app/firebase/auth/auth.dart';
@@ -102,7 +102,7 @@ class MyApp extends StatelessWidget {
                   } else {
                     return BlocBuilder<HomeBloc, HomeState>(
                       builder: (context, state) {
-                        return MyBottomNavBar(
+                        return MyBottomNav(
                           homeState: state is HomeStateDelivery
                               ? 'Delivery'
                               : 'Pick Up',

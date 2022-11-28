@@ -1,21 +1,22 @@
+import 'package:car_app/blocs/home_bloc/home_bloc.dart';
 import 'package:car_app/firebase/storage/add_user_data.dart';
 import 'package:car_app/models/user_data_models.dart';
 import 'package:car_app/screens/Adress/input_adress_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FinishOrderScreen extends StatefulWidget {
   FinishOrderScreen(
-      {super.key,
-      required this.homeState,
-      required this.shippingPrice,
-      required this.total});
+      {super.key, required this.shippingPrice, required this.total});
 
-  String homeState;
   final double shippingPrice;
   final double? total;
 
@@ -51,66 +52,117 @@ class _FinishOrderScreenState extends State<FinishOrderScreen> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: GestureDetector(
-                  onTap: () => Navigator.push(
-                      context,
-                      PageTransition(
-                          child: const InputAdressScreen(),
-                          type: PageTransitionType.bottomToTop)),
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    height: 120,
-                    color: Theme.of(context).colorScheme.tertiary,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                child: BlocBuilder<HomeBloc, HomeState>(
+                  builder: (context, state) {
+                    return GestureDetector(
+                      onTap: () => state is HomeStateDelivery
+                          ? Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: const InputAdressScreen(),
+                                  type: PageTransitionType.bottomToTop))
+                          : launchUrl(
+                              Uri.parse(
+                                  'https://www.google.com/maps/place/R.+Orindiuva,+28+-+Jardim+Elzinha,+Carapicu%C3%ADba+-+SP,+06362-030/@-23.5563651,-46.8444203,20.12z/data=!4m5!3m4!1s0x94cf00388513b4f7:0x2982d36f4e6ee87f!8m2!3d-23.5565137!4d-46.8440269'),
+                              mode: LaunchMode.externalApplication),
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        height: 120,
+                        color: Theme.of(context).colorScheme.tertiary,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              widget.homeState == 'Delivery'
-                                  ? '${AppLocalizations.of(context)!.shippingAdress}'
-                                  : '${AppLocalizations.of(context)!.pickUpAdress}',
-                              style: GoogleFonts.inriaSans(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color:
-                                      Theme.of(context).colorScheme.onTertiary),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width / 1.5,
-                                child: Text(
-                                  userAdressModelString ??
-                                      AppLocalizations.of(context)!.addAnAdress,
-                                  maxLines: 2,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onTertiary),
-                                  overflow: TextOverflow.ellipsis,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                BlocBuilder<HomeBloc, HomeState>(
+                                  builder: (context, state) {
+                                    return Text(
+                                      state is HomeStateDelivery
+                                          ? '${AppLocalizations.of(context)!.shippingAdress}'
+                                          : '${AppLocalizations.of(context)!.pickUpAdress}',
+                                      style: GoogleFonts.inriaSans(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onTertiary),
+                                    );
+                                  },
                                 ),
-                              ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.5,
+                                    child: BlocBuilder<HomeBloc, HomeState>(
+                                      builder: (context, state) {
+                                        return state is HomeStateDelivery
+                                            ? Text(
+                                                userAdressModelString ??
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .addAnAdress,
+                                                maxLines: 2,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onTertiary),
+                                                overflow: TextOverflow.ellipsis,
+                                              )
+                                            : Text(
+                                                'Rua Orindiuva, 28 - Jardim Elzinha, Carapicuíba - São Paulo, Brazil',
+                                                maxLines: 2,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onTertiary),
+                                                overflow: TextOverflow.ellipsis,
+                                              );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            BlocBuilder<HomeBloc, HomeState>(
+                              builder: (context, state) {
+                                return state is HomeStateDelivery
+                                    ? IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child:
+                                                      const InputAdressScreen(),
+                                                  type: PageTransitionType
+                                                      .bottomToTop));
+                                        },
+                                        icon: const Icon(Icons.location_pin))
+                                    : IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child:
+                                                      const InputAdressScreen(),
+                                                  type: PageTransitionType
+                                                      .bottomToTop));
+                                        },
+                                        icon: const Icon(
+                                            Icons.arrow_circle_right_outlined));
+                              },
+                            )
                           ],
                         ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: const InputAdressScreen(),
-                                      type: PageTransitionType.bottomToTop));
-                            },
-                            icon: const Icon(Icons.edit))
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
               Padding(
@@ -232,20 +284,20 @@ class _FinishOrderScreenState extends State<FinishOrderScreen> {
                 if (radioValue1 == null.toString() ||
                     radioValue2 == null.toString() ||
                     radioValue3 == null.toString()) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => CupertinoAlertDialog(
-                      content: Text(AppLocalizations.of(context)!
-                          .youNeedToselectAllOptions),
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text('Ok'))
-                      ],
-                    ),
-                  );
+                  showTopSnackBar(
+                      Overlay.of(context)!,
+                      CustomSnackBar.error(
+                          message: AppLocalizations.of(context)!
+                              .youNeedToselectAllOptions,
+                          textStyle: GoogleFonts.inriaSans(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.onSecondary),
+                          icon: const Icon(
+                            Icons.error_outline,
+                            size: 80,
+                            color: Color.fromARGB(56, 0, 0, 0),
+                          )),
+                      displayDuration: const Duration(milliseconds: 2000));
                 }
               },
               child: Row(

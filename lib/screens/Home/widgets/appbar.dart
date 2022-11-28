@@ -17,10 +17,13 @@ class MyAppBar extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return AppBar(
-          leading: const Icon(
-            Bootstrap.journal_text,
-            size: 28,
-            color: Colors.transparent,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Image.asset(
+              Theme.of(context).colorScheme.brightness == Brightness.dark
+                  ? 'assets/logo_white.png'
+                  : 'assets/logo.png',
+            ),
           ),
           actions: [
             Padding(
@@ -30,11 +33,7 @@ class MyAppBar extends StatelessWidget {
                   Navigator.push(
                       context,
                       PageTransition(
-                          child: CartScreen(
-                            homeState: state is HomeStateDelivery
-                                ? 'Delivery'
-                                : 'Pick Up',
-                          ),
+                          child: const CartScreen(),
                           type: PageTransitionType.rightToLeftWithFade));
                 },
                 icon: Icon(
