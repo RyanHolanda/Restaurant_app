@@ -39,7 +39,7 @@ class _InputAdressScreenState extends State<InputAdressScreen> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? Scaffold(body: const Center(child: CircularProgressIndicator()))
+        ? const Scaffold(body: Center(child: CircularProgressIndicator()))
         : Scaffold(
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.secondary,

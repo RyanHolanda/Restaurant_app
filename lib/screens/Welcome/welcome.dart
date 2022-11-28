@@ -28,8 +28,10 @@ class WelcomeScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
-                gradient: LinearGradient(colors: [Colors.black, Color.fromARGB(0, 0, 0, 0)], begin: Alignment.bottomCenter, end: Alignment.topCenter)
-              ),
+                  gradient: LinearGradient(
+                      colors: [Colors.black, Color.fromARGB(0, 0, 0, 0)],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter)),
             ),
           ),
           Padding(
@@ -50,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
               color: Theme.of(context).colorScheme.primaryContainer,
               height: MediaQuery.of(context).size.height / 2,
               child: Padding(
-                padding: const EdgeInsets.only(left: 34, right: 34, top: 34),
+                padding: const EdgeInsets.only(left: 15, right: 15, top: 34),
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Column(
@@ -59,21 +61,14 @@ class WelcomeScreen extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            'Black Beard Burger',
-                            style: GoogleFonts.inriaSans(
-                                fontSize: 32, fontWeight: FontWeight.bold),
+                          SizedBox(
+                            width: 270,
+                            child: Text(
+                              'Black Beard Burger',
+                              style: GoogleFonts.inriaSans(
+                                  fontSize: 32, fontWeight: FontWeight.bold),
+                            ),
                           ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Image.asset(
-                            Theme.of(context).colorScheme.brightness ==
-                                    Brightness.light
-                                ? 'assets/logo.png'
-                                : 'assets/logo_white.png',
-                            height: 30,
-                          )
                         ],
                       ),
                       const SizedBox(
@@ -82,8 +77,7 @@ class WelcomeScreen extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 1.5,
                         child: Text(
-                          AppLocalizations.of(context)!
-                              .yourFavoriteHamburguer,
+                          AppLocalizations.of(context)!.yourFavoriteHamburguer,
                           maxLines: 3,
                           style: GoogleFonts.inriaSans(
                               fontSize: 32, fontWeight: FontWeight.w200),

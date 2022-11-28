@@ -24,7 +24,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             email: event.email,
             password: event.password,
             phoneNumber: event.phoneNumber);
-            Database().addUserNumber(event.phoneNumber);
+        Database().addUserNumber(event.phoneNumber);
         add(AppEventGetData());
       } on FirebaseAuthException catch (e) {
         emit(AppStateAuthError(
@@ -38,12 +38,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       try {
         final items = await ItemsRepository().getItems();
         itemsList = items;
-        final storeS =await StoreStatusRepo().getStoreStatus();
+        final storeS = await StoreStatusRepo().getStoreStatus();
         storeStatus = storeS;
-        await Database().getUserAdress();
+        await Database().getAllData();
         emit(const AppStateLoggedIn(isLoading: false));
       } catch (e) {
-        print(e);
         add(AppEventGetData());
       }
     });
@@ -68,7 +67,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       try {
         await Auth().signOut();
         emit(const AppStateLoggedOut(isLoading: false));
-      } on FirebaseAuthException catch (e) {}
+      } on FirebaseAuthException catch (_) {}
     });
 
     on<AppEventEnterWithGoogle>((event, emit) async {

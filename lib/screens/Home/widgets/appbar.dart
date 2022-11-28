@@ -1,5 +1,4 @@
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
-import 'package:car_app/firebase/storage/add_user_data.dart';
 import 'package:car_app/screens/Cart/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,13 +17,10 @@ class MyAppBar extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return AppBar(
-          leading: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              BoxIcons.bx_menu_alt_left,
-              size: 28,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+          leading: const Icon(
+            Bootstrap.journal_text,
+            size: 28,
+            color: Colors.transparent,
           ),
           actions: [
             Padding(
@@ -42,7 +38,7 @@ class MyAppBar extends StatelessWidget {
                           type: PageTransitionType.rightToLeftWithFade));
                 },
                 icon: Icon(
-                  Bootstrap.cart_dash,
+                  Bootstrap.cart,
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),

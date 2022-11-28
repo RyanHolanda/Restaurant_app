@@ -10,8 +10,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'dart:math';
 
-double distanceFromStore = 0.0;
-
 class ComplementAdressScreen extends StatefulWidget {
   const ComplementAdressScreen({super.key, required this.adrees});
 
@@ -22,6 +20,7 @@ class ComplementAdressScreen extends StatefulWidget {
 }
 
 class _ComplementAdressScreenState extends State<ComplementAdressScreen> {
+  double distanceFromStore = 0.0;
   late String catchNumber = widget.adrees.split(',')[1].split('-')[0];
   late int _number = 0;
   TextEditingController complementController = TextEditingController();
@@ -43,17 +42,17 @@ class _ComplementAdressScreenState extends State<ComplementAdressScreen> {
   }
 
   getDistance() async {
-    GeoData _userAress = await Geocoder2.getDataFromAddress(
+    GeoData userAress = await Geocoder2.getDataFromAddress(
         address: widget.adrees,
         googleMapApiKey: 'AIzaSyC_IeLigRUrh6nafTOWbGqtzV5h_1itk0A');
 
-    GeoData _storeAddress = await Geocoder2.getDataFromAddress(
+    GeoData storeAddress = await Geocoder2.getDataFromAddress(
         address:
             'Rua Orindiuva, 28 - Jardim Elzinha, Carapicuíba - State of São Paulo',
         googleMapApiKey: 'AIzaSyC_IeLigRUrh6nafTOWbGqtzV5h_1itk0A');
 
-    calculateDistance(_userAress.latitude, _userAress.longitude,
-        _storeAddress.latitude, _storeAddress.longitude);
+    calculateDistance(userAress.latitude, userAress.longitude,
+        storeAddress.latitude, storeAddress.longitude);
   }
 
   @override
@@ -142,7 +141,7 @@ class _ComplementAdressScreenState extends State<ComplementAdressScreen> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(15),
                             child: Container(
-                              padding: EdgeInsets.all(20),
+                              padding: const EdgeInsets.all(20),
                               color: Theme.of(context).colorScheme.onPrimary,
                               child: Center(
                                   child: Text(
@@ -249,12 +248,12 @@ class _ComplementAdressScreenState extends State<ComplementAdressScreen> {
                                   label: Text(AppLocalizations.of(context)!
                                       .saveAddress),
                                   onPressed: () async {
-                                    print(distanceFromStore);
                                     _number == 0
-                                        ? const Text('data')
+                                        ? null
                                         : await Database().addUserAdress(
                                             '${widget.adrees}, ${AppLocalizations.of(context)!.number}: ${numberController.text} ${referenceController.text} ${complementController.text}',
-                                          );
+                                            distanceFromStore);
+
                                     context
                                         .read<AppBloc>()
                                         .add(AppEventGetData());

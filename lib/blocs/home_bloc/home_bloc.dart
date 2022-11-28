@@ -9,19 +9,18 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeStateDelivery()) {
     on<HomeEventGoToPickupSection>((event, emit) async {
-      try{
+      try {
         emit(HomeStatePickUp());
-      } catch (e){
+      } catch (e) {
         rethrow;
       }
     });
     on<HomeEventGoToDeliverySection>((event, emit) {
-      try{
+      try {
         emit(HomeStateDelivery());
-      } catch (e){
+      } catch (e) {
         rethrow;
       }
-      
     });
   }
 }

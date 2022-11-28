@@ -24,7 +24,6 @@ class Auth {
   Future<void> sendPasswordResetEmail({required String email}) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
-  
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
@@ -37,7 +36,7 @@ class Auth {
     if (googleAuth?.accessToken != null && googleAuth?.idToken != null) {
       final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
-      UserCredential userCredential =
+      final UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
     }
   }

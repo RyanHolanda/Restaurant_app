@@ -1,17 +1,16 @@
 import 'package:car_app/models/items_model.dart';
 import 'package:car_app/screens/Home/widgets/selected_item_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class MostOrderedBurguersList extends StatelessWidget {
-   MostOrderedBurguersList({
+  const MostOrderedBurguersList({
     required this.homeState,
     Key? key,
   }) : super(key: key);
 
-  String homeState;
+  final String homeState;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +31,8 @@ class MostOrderedBurguersList extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     itemsList.sort(
-                (a, b) => b.orders.compareTo(a.orders),
-              );
+                      (a, b) => b.orders.compareTo(a.orders),
+                    );
                     Navigator.push(
                         context,
                         PageTransition(

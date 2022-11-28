@@ -4,7 +4,7 @@ import 'package:car_app/models/items_model.dart';
 import 'package:http/http.dart' as http;
 
 class ItemsRepository {
-  String url = 'https://blackbeard-api.herokuapp.com/items';
+  String url = 'https://black-beard-burguer-406f0.web.app/items';
   Future<List<ItemModel>> getItems() async {
     try {
       final response = await http.get(Uri.parse(url));
@@ -15,9 +15,6 @@ class ItemsRepository {
         throw Exception(response.reasonPhrase);
       }
     } catch (e) {
-      print(e);
-      print('trying to reconnect items');
-
       return ItemsRepository().getItems();
     }
   }

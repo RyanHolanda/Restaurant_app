@@ -1,7 +1,8 @@
+import 'package:car_app/NavBar/Bottom_Nav_Bar.dart';
 import 'package:car_app/blocs/cart_bloc/cart_bloc.dart';
+import 'package:car_app/blocs/home_bloc/home_bloc.dart';
 import 'package:car_app/firebase/auth/auth.dart';
 import 'package:car_app/blocs/app_bloc.dart';
-import 'package:car_app/screens/Home/home.dart';
 import 'package:car_app/screens/Loading/loading_screen.dart';
 import 'package:car_app/screens/Welcome/welcome.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => CartBloc(),
         ),
+        BlocProvider(
+          create: (context) => HomeBloc(),
+        )
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -60,7 +64,7 @@ class MyApp extends StatelessWidget {
                 onSurface: const Color.fromARGB(255, 255, 255, 255))),
         darkTheme: ThemeData(
             brightness: Brightness.dark,
-            scaffoldBackgroundColor: Color.fromARGB(255, 13, 13, 13),
+            scaffoldBackgroundColor: const Color.fromARGB(255, 13, 13, 13),
             colorScheme: ColorScheme(
                 brightness: Brightness.dark,
                 secondaryContainer: Colors.grey.shade900,
@@ -96,7 +100,15 @@ class MyApp extends StatelessWidget {
                   if (state.isLoading == true) {
                     return const LoadingScreen();
                   } else {
-                    return HomeScreen();
+                    return BlocBuilder<HomeBloc, HomeState>(
+                      builder: (context, state) {
+                        return MyBottomNavBar(
+                          homeState: state is HomeStateDelivery
+                              ? 'Delivery'
+                              : 'Pick Up',
+                        );
+                      },
+                    );
                   }
                 }
                 if (state is AppStateLoggedOut ||

@@ -1,20 +1,22 @@
 import 'package:car_app/blocs/cart_bloc/cart_bloc.dart';
-import 'package:car_app/firebase/auth/auth.dart';
-import 'package:car_app/blocs/app_bloc.dart';
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
+import 'package:car_app/firebase/storage/add_user_data.dart';
+import 'package:car_app/screens/Cart/cart_screen.dart';
 import 'package:car_app/screens/Home/widgets/appbar.dart';
 import 'package:car_app/screens/Home/widgets/items_list.dart';
 import 'package:car_app/screens/Home/widgets/most_ordered_list.dart';
 import 'package:car_app/screens/Home/widgets/pick_up_adress.dart';
 import 'package:car_app/screens/Home/widgets/user_adress.dart';
+import 'package:car_app/screens/Search%20Screen/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +24,23 @@ class HomeScreen extends StatelessWidget {
       create: (context) => HomeBloc(),
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          final user = Auth().currentUser;
+          Database().getUserDistance();
           return GestureDetector(
+            onHorizontalDragUpdate: (details) {
+              if (details.primaryDelta! < 0) {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: CartScreen(
+                          homeState: state is HomeStateDelivery
+                              ? 'Delivery'
+                              : 'Pick Up',
+                        ),
+                        type: PageTransitionType.rightToLeftWithFade));
+              }
+            },
             onTap: () => FocusScope.of(context).unfocus(),
             child: Scaffold(
-              floatingActionButton: FloatingActionButton(
-                  backgroundColor: Colors.amber,
-                  onPressed: () =>
-                      context.read<AppBloc>().add(AppEventSignOut())),
               appBar: const PreferredSize(
                   preferredSize: Size.fromHeight(70), child: MyAppBar()),
               body: SingleChildScrollView(
@@ -94,30 +105,43 @@ class SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50, left: 15, right: 15),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: 60,
-          child: TextField(
-            decoration: InputDecoration(
-                suffixIcon: const Icon(Icons.search),
-                hintText: 'Brutinho  •  Green Beard  •  Cheddar...',
-                hintStyle:
-                    TextStyle(color: Theme.of(context).colorScheme.onTertiary),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(9),
-                    borderSide: BorderSide.none),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.onPrimary),
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.only(top: 50, left: 15, right: 15),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 60,
+              child: TextField(
+                readOnly: true,
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchScreen(
+                        homeState:
+                            state is HomeStateDelivery ? 'Delivery' : 'Pick Up',
+                      ),
+                    )),
+                decoration: InputDecoration(
+                    suffixIcon: const Icon(Icons.search),
+                    hintText: 'Brutinho  •  Green Beard  •  Cheddar...',
+                    hintStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.onTertiary),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(9),
+                        borderSide: BorderSide.none),
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.onPrimary),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

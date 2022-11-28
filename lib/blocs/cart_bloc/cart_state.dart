@@ -3,7 +3,7 @@ part of 'cart_bloc.dart';
 
 class CartState extends Equatable {
   final List<CartModel> cartItems;
-  CartState({
+  const CartState({
     this.cartItems = const <CartModel>[],
   });
   @override

@@ -1,8 +1,5 @@
-import 'package:car_app/models/adress_model.dart';
-import 'package:flutter/material.dart';
+import 'package:car_app/models/user_data_models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import '../auth/auth.dart';
 
 class Database {
@@ -13,19 +10,30 @@ class Database {
     FirebaseFirestore.instance.collection('Users').doc(user!.email).set({
       'phone_number': phone,
     });
-    print('Added');
   }
 
-  Future addUserAdress(adress) async {
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(user!.email)
-        .update({'adress': adress}).catchError((err) {
+  Future addUserAdress(adress, distance) async {
+    FirebaseFirestore.instance.collection('Users').doc(user!.email).update(
+        {'adress': adress, 'DistanceFromStore': distance}).catchError((err) {
       if (err.code == 'not-found') {
         FirebaseFirestore.instance
             .collection('Users')
             .doc(user!.email)
-            .set({'adress': adress});
+            .set({'adress': adress, 'DistanceFromStore': distance});
+      }
+    });
+  }
+
+  Future addUserName(name) async {
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.email)
+        .update({'name': name}).catchError((err) {
+      if (err.code == 'not-found') {
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user!.email)
+            .set({'name': name});
       }
     });
   }
@@ -34,14 +42,30 @@ class Database {
     FirebaseFirestore.instance
         .collection('Users')
         .doc(user!.email)
-        .update({'phone': phone}).catchError((err) {
+        .update({'phone_number': phone}).catchError((err) {
       if (err.code == 'not-found') {
         FirebaseFirestore.instance
             .collection('Users')
             .doc(user!.email)
-            .set({'adress': phone});
+            .set({'phone_number': phone});
       }
     });
+  }
+
+  Future getUserName() async {
+    final ref = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.email)
+        .withConverter(
+            fromFirestore: NameModel.fromFirestore,
+            toFirestore: (NameModel userName, _) => NameModel().toFirestore());
+    final docSnap = await ref.get();
+    final userName = docSnap.data();
+    if (userName != null) {
+      userNameString = userName.userName;
+    } else {
+      userNameString = null;
+    }
   }
 
   Future getUserAdress() async {
@@ -60,5 +84,47 @@ class Database {
       userAdressModelString = null;
       getUserAdress();
     }
+  }
+
+  Future getUserDistance() async {
+    final ref = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.email)
+        .withConverter(
+            fromFirestore: DistanceModel.fromFirestore,
+            toFirestore: (DistanceModel distance, _) =>
+                DistanceModel().toFirestore());
+    final docSnap = await ref.get();
+    final distance = docSnap.data();
+    if (distance != null) {
+      distanceFromStore = distance.distance;
+    } else {
+      distanceFromStore = null;
+      getUserDistance();
+    }
+  }
+
+  Future getUserNumber() async {
+    final ref = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.email)
+        .withConverter(
+            fromFirestore: NumberModel.fromFirestore,
+            toFirestore: (NumberModel userNumber, _) =>
+                NumberModel().toFirestore());
+    final docSnap = await ref.get();
+    final userNumber = docSnap.data();
+    if (userNumber != null) {
+      userNumberModelString = userNumber.userNumber;
+    } else {
+      userAdressModelString = null;
+    }
+  }
+
+  Future getAllData() async {
+    await getUserNumber();
+    await getUserAdress();
+    await getUserDistance();
+    await getUserName();
   }
 }

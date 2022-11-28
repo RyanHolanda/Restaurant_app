@@ -1,4 +1,4 @@
-import 'package:car_app/models/adress_model.dart';
+import 'package:car_app/models/user_data_models.dart';
 import 'package:car_app/screens/Adress/input_adress_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +16,17 @@ class UserAdress extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: GestureDetector(
-        onTap: () => Navigator.push(context, PageTransition(child: const InputAdressScreen(), type: PageTransitionType.bottomToTop)),
+        onTap: () => Navigator.push(
+            context,
+            PageTransition(
+                child: const InputAdressScreen(),
+                type: PageTransitionType.bottomToTop)),
         child: GestureDetector(
-          onTap: () => Navigator.push(context, PageTransition(child: const InputAdressScreen(), type: PageTransitionType.bottomToTop)),
+          onTap: () => Navigator.push(
+              context,
+              PageTransition(
+                  child: const InputAdressScreen(),
+                  type: PageTransitionType.bottomToTop)),
           child: SizedBox(
             child: Row(
               children: [
@@ -43,7 +51,8 @@ class UserAdress extends StatelessWidget {
                       child: SizedBox(
                         width: 200,
                         child: Text(
-                          userAdressModelString ?? AppLocalizations.of(context)!.addAnAdress,
+                          userAdressModelString ??
+                              AppLocalizations.of(context)!.addAnAdress,
                           style: GoogleFonts.inriaSans(
                               color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.bold),
@@ -58,8 +67,13 @@ class UserAdress extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: IconButton(
                         onPressed: () {
-                          Navigator.push(context, PageTransition(child: InputAdressScreen(), type: PageTransitionType.bottomToTop));
-                        }, icon: const Icon(Icons.navigate_next)),
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: const InputAdressScreen(),
+                                  type: PageTransitionType.bottomToTop));
+                        },
+                        icon: const Icon(Icons.navigate_next)),
                   ),
                 )
               ],
@@ -70,4 +84,3 @@ class UserAdress extends StatelessWidget {
     );
   }
 }
-

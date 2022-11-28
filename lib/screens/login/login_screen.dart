@@ -1,5 +1,4 @@
-
-import 'package:car_app/screens/login/forgotpasswordScreen.dart';
+import 'package:car_app/screens/login/forgot_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -89,7 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, top: 10, right: 20),
+                      padding:
+                          const EdgeInsets.only(left: 20, top: 10, right: 20),
                       child: SizedBox(
                         height: 60,
                         width: MediaQuery.of(context).size.width,

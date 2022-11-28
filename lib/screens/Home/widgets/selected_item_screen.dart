@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:car_app/blocs/app_bloc.dart';
 import 'package:car_app/blocs/cart_bloc/cart_bloc.dart';
 import 'package:car_app/models/cart_model.dart';
 import 'package:car_app/screens/Cart/cart_screen.dart';
@@ -14,7 +11,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class SelectedItemScreen extends StatefulWidget {
-  SelectedItemScreen(
+  const SelectedItemScreen(
       {super.key,
       required this.homeState,
       required this.paused,
@@ -23,12 +20,12 @@ class SelectedItemScreen extends StatefulWidget {
       required this.name,
       required this.description});
 
-  String imageUrl;
-  String name;
-  String description;
-  bool paused;
-  String homeState;
-  double price;
+  final String imageUrl;
+  final String name;
+  final String description;
+  final bool paused;
+  final String homeState;
+  final double price;
 
   @override
   State<SelectedItemScreen> createState() => _SelectedItemScreenState();
@@ -37,10 +34,13 @@ class SelectedItemScreen extends StatefulWidget {
 class _SelectedItemScreenState extends State<SelectedItemScreen> {
   int quantity = 1;
   var newPrice = 0.0;
-
+  TextEditingController observationsController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var item = CartModel(
+        observations: observationsController.text == ''
+            ? null
+            : observationsController.text,
         name: widget.name,
         imageUrl: widget.imageUrl,
         price: newPrice == 0 ? widget.price : newPrice,
@@ -48,6 +48,11 @@ class _SelectedItemScreenState extends State<SelectedItemScreen> {
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
         return GestureDetector(
+          onHorizontalDragUpdate: (details) {
+            if (details.primaryDelta! > 50) {
+              Navigator.pop(context);
+            }
+          },
           onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
             bottomNavigationBar: ClipRRect(
@@ -103,7 +108,7 @@ class _SelectedItemScreenState extends State<SelectedItemScreen> {
                             },
                             icon: const Icon(Icons.add),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           ClipRRect(
                             borderRadius: BorderRadius.circular(15),
                             child: SizedBox(
@@ -209,6 +214,9 @@ class _SelectedItemScreenState extends State<SelectedItemScreen> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 30, horizontal: 15),
                     child: TextField(
+                      onChanged: (value) => setState(() {
+                        observationsController.text = value;
+                      }),
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
