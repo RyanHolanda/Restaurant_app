@@ -1,6 +1,8 @@
 import 'package:car_app/NavBar/bottom_nav_bar.dart';
 import 'package:car_app/blocs/cart_bloc/cart_bloc.dart';
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
+import 'package:car_app/blocs/order_bloc/order_bloc.dart';
+import 'package:car_app/blocs/payment_bloc/payment_bloc.dart';
 import 'package:car_app/firebase/auth/auth.dart';
 import 'package:car_app/blocs/app_bloc.dart';
 import 'package:car_app/screens/Loading/loading_screen.dart';
@@ -25,14 +27,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.top]);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.transparent));
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) => OrderBloc(),
+        ),
+        BlocProvider(
+          create: (context) => PaymentBloc(),
+        ),
         BlocProvider(
           create: (context) => AppBloc(),
         ),
@@ -103,9 +109,7 @@ class MyApp extends StatelessWidget {
                     return BlocBuilder<HomeBloc, HomeState>(
                       builder: (context, state) {
                         return MyBottomNav(
-                          homeState: state is HomeStateDelivery
-                              ? 'Delivery'
-                              : 'Pick Up',
+                          selectedIndex: 0,
                         );
                       },
                     );

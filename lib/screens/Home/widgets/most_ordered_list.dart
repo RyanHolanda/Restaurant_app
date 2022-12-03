@@ -6,11 +6,11 @@ import 'package:page_transition/page_transition.dart';
 
 class MostOrderedBurguersList extends StatelessWidget {
   const MostOrderedBurguersList({
-    required this.homeState,
+    this.homeState,
     Key? key,
   }) : super(key: key);
 
-  final String homeState;
+  final String? homeState;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class MostOrderedBurguersList extends StatelessWidget {
                         context,
                         PageTransition(
                             child: SelectedItemScreen(
-                              homeState: homeState,
+                              homeState: homeState!,
                               paused: itemsList[index].paused,
                               price: double.parse(
                                   itemsList[index].price.replaceAll(',', '.')),

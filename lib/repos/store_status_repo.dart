@@ -16,6 +16,7 @@ class StoreStatusRepo {
         throw Exception(response.reasonPhrase);
       }
     } catch (e) {
+      print('erro store status');
       return StoreStatusRepo().getStoreStatus();
     }
   }

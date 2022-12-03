@@ -17,14 +17,7 @@ class MyAppBar extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Image.asset(
-              Theme.of(context).colorScheme.brightness == Brightness.dark
-                  ? 'assets/logo_white.png'
-                  : 'assets/logo.png',
-            ),
-          ),
+          leading: const SizedBox.shrink(),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 15),

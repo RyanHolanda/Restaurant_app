@@ -55,102 +55,107 @@ class _SelectedItemScreenState extends State<SelectedItemScreen> {
           },
           onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
-            bottomNavigationBar: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
-                ),
-                padding: const EdgeInsets.all(15),
-                height: 100,
-                child: widget.paused
-                    ? Center(
-                        child: Text(
-                        AppLocalizations.of(context)!.unavailableItem,
-                        style: GoogleFonts.inriaSans(
-                            color: Theme.of(context).colorScheme.onTertiary,
-                            fontWeight: FontWeight.bold),
-                      ))
-                    : Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              quantity == 1
-                                  ? null
-                                  : setState(() {
-                                      quantity--;
-                                      newPrice = widget.price * quantity;
-                                    });
-                            },
-                            icon: const Icon(Icons.remove),
-                            color: quantity == 1
-                                ? Colors.grey.shade400
-                                : Theme.of(context).colorScheme.primary,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            quantity.toString(),
-                            style: GoogleFonts.inriaSans(
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                quantity++;
-                                newPrice = widget.price * quantity;
-                              });
-                            },
-                            icon: const Icon(Icons.add),
-                          ),
-                          const Spacer(),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: SizedBox(
-                              height: 50,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  context
-                                      .read<CartBloc>()
-                                      .add(AddItemToCart(item: item));
-                                  showTopSnackBar(
-                                      Overlay.of(context)!,
-                                      CustomSnackBar.success(
-                                          message: AppLocalizations.of(context)!
-                                              .itemAddedtoCart,
-                                          textStyle: GoogleFonts.inriaSans(
-                                              fontWeight: FontWeight.bold,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSecondary),
-                                          icon: const Icon(
-                                            Bootstrap.cart3,
-                                            size: 70,
-                                            color: Color.fromARGB(56, 0, 0, 0),
-                                          )), onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            child: const CartScreen(),
-                                            type: PageTransitionType
-                                                .rightToLeftWithFade));
-                                  },
-                                      displayDuration:
-                                          const Duration(milliseconds: 500));
-                                },
-                                child: Text(newPrice.toString() == '0.0'
-                                    ? '${AppLocalizations.of(context)!.add}   R\$ ${widget.price}'
-                                    : '${AppLocalizations.of(context)!.add}   R\$ ${newPrice.toStringAsFixed(2).toString()}'),
-                              ),
+            bottomNavigationBar: SafeArea(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15)),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondaryContainer,
+                  ),
+                  padding: const EdgeInsets.all(15),
+                  height: 100,
+                  child: widget.paused
+                      ? Center(
+                          child: Text(
+                          AppLocalizations.of(context)!.unavailableItem,
+                          style: GoogleFonts.inriaSans(
+                              color: Theme.of(context).colorScheme.onTertiary,
+                              fontWeight: FontWeight.bold),
+                        ))
+                      : Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                quantity == 1
+                                    ? null
+                                    : setState(() {
+                                        quantity--;
+                                        newPrice = widget.price * quantity;
+                                      });
+                              },
+                              icon: const Icon(Icons.remove),
+                              color: quantity == 1
+                                  ? Colors.grey.shade400
+                                  : Theme.of(context).colorScheme.primary,
                             ),
-                          )
-                        ],
-                      ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              quantity.toString(),
+                              style: GoogleFonts.inriaSans(
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  quantity++;
+                                  newPrice = widget.price * quantity;
+                                });
+                              },
+                              icon: const Icon(Icons.add),
+                            ),
+                            const Spacer(),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: SizedBox(
+                                height: 50,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    context
+                                        .read<CartBloc>()
+                                        .add(AddItemToCart(item: item));
+                                    showTopSnackBar(
+                                        Overlay.of(context)!,
+                                        CustomSnackBar.success(
+                                            message:
+                                                AppLocalizations.of(context)!
+                                                    .itemAddedtoCart,
+                                            textStyle: GoogleFonts.inriaSans(
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSecondary),
+                                            icon: const Icon(
+                                              Bootstrap.cart3,
+                                              size: 70,
+                                              color:
+                                                  Color.fromARGB(56, 0, 0, 0),
+                                            )), onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              child: const CartScreen(),
+                                              type: PageTransitionType
+                                                  .rightToLeftWithFade));
+                                    },
+                                        displayDuration:
+                                            const Duration(milliseconds: 500));
+                                  },
+                                  child: Text(newPrice.toString() == '0.0'
+                                      ? '${AppLocalizations.of(context)!.add}   R\$ ${widget.price}'
+                                      : '${AppLocalizations.of(context)!.add}   R\$ ${newPrice.toStringAsFixed(2).toString()}'),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                ),
               ),
             ),
             extendBodyBehindAppBar: true,

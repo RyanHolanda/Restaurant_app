@@ -153,8 +153,10 @@ class ProfileScreen extends StatelessWidget {
                                     child: TextField(
                                       focusNode: nameFocusnode,
                                       onChanged: (value) {
-                                        Database().addUserName(value);
-                                        Database().getUserName();
+                                        if (value.characters.length > 3) {
+                                          Database().addUserName(value);
+                                          Database().getUserName();
+                                        }
                                       },
                                       controller: TextEditingController(
                                           text: userNameString),
@@ -224,7 +226,11 @@ class ProfileScreen extends StatelessWidget {
                                       keyboardType: TextInputType.number,
                                       onSubmitted: (value) {
                                         value.characters.length == 11
-                                            ? Database().getUserNumber()
+                                            ? {
+                                                Database().getUserNumber(),
+                                                Database()
+                                                    .updateUserNumber(value)
+                                              }
                                             : showTopSnackBar(
                                                 Overlay.of(context)!,
                                                 CustomSnackBar.error(
@@ -304,94 +310,92 @@ class ProfileScreen extends StatelessWidget {
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,
-                                builder: (context) => Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height / 7,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .areYouSureYouWantToLogOut,
-                                          style: GoogleFonts.inriaSans(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                  border: Border.all(
+                                builder: (context) => Container(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  height:
+                                      MediaQuery.of(context).size.height / 7,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .areYouSureYouWantToLogOut,
+                                        style: GoogleFonts.inriaSans(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary)),
+                                            height: 50,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2.5,
+                                            child: MaterialButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .no,
+                                                  style: TextStyle(
                                                       color: Theme.of(context)
                                                           .colorScheme
-                                                          .primary)),
+                                                          .primary),
+                                                )),
+                                          ),
+                                          const SizedBox(
+                                            width: 15,
+                                          ),
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            child: SizedBox(
                                               height: 50,
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
                                                   2.5,
                                               child: MaterialButton(
-                                                  onPressed: () {
+                                                  color: Colors.red,
+                                                  onPressed: () async {
+                                                    Future signOut() async {
+                                                      context
+                                                          .read<AppBloc>()
+                                                          .add(
+                                                              AppEventSignOut());
+                                                    }
+
+                                                    await signOut();
+                                                    // ignore: use_build_context_synchronously
                                                     Navigator.pop(context);
                                                   },
                                                   child: Text(
                                                     AppLocalizations.of(
                                                             context)!
-                                                        .no,
-                                                    style: TextStyle(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary),
+                                                        .yes,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
                                                   )),
                                             ),
-                                            const SizedBox(
-                                              width: 15,
-                                            ),
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              child: SizedBox(
-                                                height: 50,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    2.5,
-                                                child: MaterialButton(
-                                                    color: Colors.red,
-                                                    onPressed: () async {
-                                                      Future signOut() async {
-                                                        context
-                                                            .read<AppBloc>()
-                                                            .add(
-                                                                AppEventSignOut());
-                                                      }
-
-                                                      await signOut();
-                                                      // ignore: use_build_context_synchronously
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      AppLocalizations.of(
-                                                              context)!
-                                                          .yes,
-                                                      style: const TextStyle(
-                                                          color: Colors.white),
-                                                    )),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
                                   ),
                                 ),
                               );

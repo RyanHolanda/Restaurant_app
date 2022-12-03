@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
 import 'package:car_app/firebase/storage/add_user_data.dart';
 import 'package:car_app/models/user_data_models.dart';
 import 'package:car_app/screens/Adress/input_adress_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:car_app/screens/Finish_Order/widgets/payment_method_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,7 +20,7 @@ class FinishOrderScreen extends StatefulWidget {
       {super.key, required this.shippingPrice, required this.total});
 
   final double shippingPrice;
-  final double? total;
+  final double total;
 
   @override
   State<FinishOrderScreen> createState() => _FinishOrderScreenState();
@@ -55,16 +57,21 @@ class _FinishOrderScreenState extends State<FinishOrderScreen> {
                 child: BlocBuilder<HomeBloc, HomeState>(
                   builder: (context, state) {
                     return GestureDetector(
-                      onTap: () => state is HomeStateDelivery
-                          ? Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: const InputAdressScreen(),
-                                  type: PageTransitionType.bottomToTop))
-                          : launchUrl(
-                              Uri.parse(
-                                  'https://www.google.com/maps/place/R.+Orindiuva,+28+-+Jardim+Elzinha,+Carapicu%C3%ADba+-+SP,+06362-030/@-23.5563651,-46.8444203,20.12z/data=!4m5!3m4!1s0x94cf00388513b4f7:0x2982d36f4e6ee87f!8m2!3d-23.5565137!4d-46.8440269'),
-                              mode: LaunchMode.externalApplication),
+                      onTap: () {
+                        Timer.periodic(const Duration(seconds: 1),
+                            (timer) => setState(() {}));
+                        setState(() {});
+                        state is HomeStateDelivery
+                            ? Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: const InputAdressScreen(),
+                                    type: PageTransitionType.bottomToTop))
+                            : launchUrl(
+                                Uri.parse(
+                                    'https://www.google.com/maps/place/R.+Orindiuva,+28+-+Jardim+Elzinha,+Carapicu%C3%ADba+-+SP,+06362-030/@-23.5563651,-46.8444203,20.12z/data=!4m5!3m4!1s0x94cf00388513b4f7:0x2982d36f4e6ee87f!8m2!3d-23.5565137!4d-46.8440269'),
+                                mode: LaunchMode.externalApplication);
+                      },
                       child: Container(
                         padding: const EdgeInsets.all(15),
                         height: 120,
@@ -256,7 +263,7 @@ class _FinishOrderScreenState extends State<FinishOrderScreen> {
                     radioValue3 = value!;
                   });
                 },
-                title: const Text('Ao ponto'),
+                title: Text(AppLocalizations.of(context)!.medium),
               ),
               RadioListTile(
                 value: 'Bem passada',
@@ -266,53 +273,67 @@ class _FinishOrderScreenState extends State<FinishOrderScreen> {
                     radioValue3 = value!;
                   });
                 },
-                title: const Text('Bem passada'),
+                title: Text(AppLocalizations.of(context)!.wellDone),
               ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(15),
-          child: SizedBox(
-            height: 50,
-            child: MaterialButton(
-              color: Theme.of(context).colorScheme.primary,
-              onPressed: () {
-                if (radioValue1 == null.toString() ||
-                    radioValue2 == null.toString() ||
-                    radioValue3 == null.toString()) {
-                  showTopSnackBar(
-                      Overlay.of(context)!,
-                      CustomSnackBar.error(
-                          message: AppLocalizations.of(context)!
-                              .youNeedToselectAllOptions,
-                          textStyle: GoogleFonts.inriaSans(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onSecondary),
-                          icon: const Icon(
-                            Icons.error_outline,
-                            size: 80,
-                            color: Color.fromARGB(56, 0, 0, 0),
-                          )),
-                      displayDuration: const Duration(milliseconds: 2000));
-                }
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Bootstrap.check,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.continuee,
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary),
-                  )
-                ],
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: SizedBox(
+              height: 50,
+              child: MaterialButton(
+                color: Theme.of(context).colorScheme.primary,
+                onPressed: () {
+                  if (radioValue1 == null.toString() ||
+                      radioValue2 == null.toString() ||
+                      radioValue3 == null.toString()) {
+                    showTopSnackBar(
+                        Overlay.of(context)!,
+                        CustomSnackBar.error(
+                            message: AppLocalizations.of(context)!
+                                .youNeedToselectAllOptions,
+                            textStyle: GoogleFonts.inriaSans(
+                                fontWeight: FontWeight.bold,
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary),
+                            icon: const Icon(
+                              Icons.error_outline,
+                              size: 80,
+                              color: Color.fromARGB(56, 0, 0, 0),
+                            )),
+                        displayDuration: const Duration(milliseconds: 2000));
+                  } else {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => ShowMyModal(
+                        meatPoint: radioValue3,
+                        molhoOrMaionese: radioValue2,
+                        wantSachets: radioValue1,
+                        total: widget.total,
+                      ),
+                      backgroundColor: Colors.transparent,
+                    );
+                  }
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Bootstrap.check,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.continuee,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

@@ -15,6 +15,7 @@ class ItemsRepository {
         throw Exception(response.reasonPhrase);
       }
     } catch (e) {
+      print('erro items');
       return ItemsRepository().getItems();
     }
   }

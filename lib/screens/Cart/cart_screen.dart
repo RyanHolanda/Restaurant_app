@@ -51,8 +51,10 @@ class _CartScreenState extends State<CartScreen> {
         return sum == null
             ? const EmptyCartScreen()
             : Scaffold(
-                bottomNavigationBar: FinishOrderWidget(
-                    shippingPrice: shippingPrice, total: total),
+                bottomNavigationBar: SafeArea(
+                  child: FinishOrderWidget(
+                      shippingPrice: shippingPrice, total: total!),
+                ),
                 appBar: AppBar(
                   title: Text(
                     AppLocalizations.of(context)!.cart,
@@ -84,10 +86,13 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ],
                 ),
-                body: Column(
-                  children: const [
-                    CartList(),
-                  ],
+                body: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: const [
+                      CartList(),
+                    ],
+                  ),
                 ),
               );
       },
@@ -103,7 +108,7 @@ class FinishOrderWidget extends StatelessWidget {
   }) : super(key: key);
 
   final double shippingPrice;
-  final double? total;
+  final double total;
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +128,7 @@ class FinishOrderWidget extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      'Total : R\$ ${total!.toStringAsFixed(2).replaceAll('.', ',')}',
+                      'Total : R\$ ${total.toStringAsFixed(2).replaceAll('.', ',')}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
