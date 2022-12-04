@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
+import 'package:car_app/blocs/cart_bloc/cart_bloc.dart';
 import 'package:car_app/models/pix_payment_info_model.dart';
 import 'package:car_app/repos/pix_payment_repo.dart';
 import 'package:equatable/equatable.dart';

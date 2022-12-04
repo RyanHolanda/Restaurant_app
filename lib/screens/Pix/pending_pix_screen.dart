@@ -97,7 +97,7 @@ class _PendingPixScreenState extends State<PendingPixScreen> {
                                       height: 20,
                                     ),
                                     Text(
-                                      '${AppLocalizations.of(context)!.amount} R\$ ${widget.total}',
+                                      '${AppLocalizations.of(context)!.amount} R\$ ${widget.total.toStringAsFixed(2)}',
                                       style: GoogleFonts.inriaSans(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,

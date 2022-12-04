@@ -105,10 +105,15 @@ class ReceiptScreen extends StatelessWidget {
       builder: (context, event) {
         List<CartModel> itemsOrdered = event.cartItems;
         final itemsOrderedToList = itemsOrdered
-            .map((value) => '${value.quantity}x ${value.name}')
+            .map((value) =>
+                '${value.quantity}x ${value.name} | ${value.observations} |')
             .toList();
-        print(itemsOrderedToList.toString());
-        context.read<OrderBloc>().add(OrderEventSendOrderToProduction(
+        final generateId = DateTime.now().microsecondsSinceEpoch;
+        final getDate =
+            '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}'
+                .toString();
+        context.read<OrderBloc>().add(AddUserPastOrders(
+            date: getDate,
             isDelivery: isDelivery,
             meatPoint: meatPoint,
             molhoOrMaionese: molhoOrMaionese,
@@ -122,7 +127,23 @@ class ReceiptScreen extends StatelessWidget {
             orderFinishedCook: false,
             inDelivery: false,
             completed: false,
-            id: DateTime.now().microsecondsSinceEpoch));
+            id: generateId));
+        context.read<OrderBloc>().add(OrderEventSendOrderToProduction(
+            date: getDate,
+            isDelivery: isDelivery,
+            meatPoint: meatPoint,
+            molhoOrMaionese: molhoOrMaionese,
+            wantSachets: wantSachets,
+            item: itemsOrderedToList.toString(),
+            total: total,
+            adress: userAdressModelString!,
+            paymentMethod: paymentMethod,
+            name: userNameString!,
+            cooking: false,
+            orderFinishedCook: false,
+            inDelivery: false,
+            completed: false,
+            id: generateId));
         return WillPopScope(
           onWillPop: () async => false,
           child: Scaffold(
@@ -132,6 +153,9 @@ class ReceiptScreen extends StatelessWidget {
                 color: Theme.of(context).colorScheme.primary,
                 child: ElevatedButton.icon(
                   onPressed: () {
+                    context
+                        .read<CartBloc>()
+                        .add(DeleteItemFromCart(item: itemsOrdered.single));
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

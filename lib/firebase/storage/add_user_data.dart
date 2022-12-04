@@ -1,5 +1,8 @@
-import 'package:car_app/models/user_data_models.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:car_app/models/user_data_models.dart';
+
 import '../auth/auth.dart';
 
 class Database {
@@ -121,10 +124,110 @@ class Database {
     }
   }
 
+  Future getUserOrders() async {
+    final ref = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.email)
+        .collection('User_Orders')
+        .withConverter(
+            fromFirestore: UserOrdersModel.fromFirestore,
+            toFirestore: (UserOrdersModel userOrdersModel, _) =>
+                UserOrdersModel().toFirestore());
+    final docSnap = await ref.get();
+    final userOrdersModel = docSnap.docs;
+    userOrdersID = userOrdersModel.map((value) => value.data()).toList();
+  }
+
   Future getAllData() async {
     await getUserNumber();
     await getUserAdress();
     await getUserDistance();
+    await getUserOrders();
     await getUserName();
+  }
+}
+
+class UserOrders {
+  String item;
+  double total;
+  String adress;
+  String date;
+  bool isDelivey;
+  String paymentMethod;
+  String wantSachets;
+  String molhoOrMaionese;
+  String meatPoint;
+  String name;
+  bool cooking;
+  bool orderFinishedCook;
+  bool inDelivery;
+  bool completed;
+  int id;
+  UserOrders({
+    required this.date,
+    required this.item,
+    required this.total,
+    required this.adress,
+    required this.isDelivey,
+    required this.paymentMethod,
+    required this.wantSachets,
+    required this.molhoOrMaionese,
+    required this.meatPoint,
+    required this.name,
+    required this.cooking,
+    required this.orderFinishedCook,
+    required this.inDelivery,
+    required this.completed,
+    required this.id,
+  });
+  final user = Auth().currentUser;
+  Future addUserOrdersToDatabase() async {
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.email)
+        .collection('User_Orders')
+        .doc(id.toString())
+        .update({
+      "order_date": date,
+      "is_delivery": isDelivey,
+      "meat_point": meatPoint,
+      "sachets": wantSachets,
+      "molho_ou_maionese": molhoOrMaionese,
+      "item": item.toString(),
+      "order_id": id,
+      "client_name": name,
+      "client_adress": adress,
+      "payment_method": paymentMethod,
+      "cooking": cooking,
+      "order_finished_cook": orderFinishedCook,
+      "order_in_delivery": inDelivery,
+      "order_completed": completed,
+      "order_total_price": total,
+    }).catchError((err) {
+      if (err.code == 'not-found') {
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user!.email)
+            .collection('User_Orders')
+            .doc(id.toString())
+            .set({
+          "order_date": date,
+          "is_delivery": isDelivey,
+          "meat_point": meatPoint,
+          "sachets": wantSachets,
+          "molho_ou_maionese": molhoOrMaionese,
+          "item": item.toString(),
+          "order_id": id,
+          "client_name": name,
+          "client_adress": adress,
+          "payment_method": paymentMethod,
+          "cooking": cooking,
+          "order_finished_cook": orderFinishedCook,
+          "order_in_delivery": inDelivery,
+          "order_completed": completed,
+          "order_total_price": total,
+        });
+      }
+    });
   }
 }

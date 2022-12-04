@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:car_app/models/cart_model.dart';
 import 'package:http/http.dart' as http;
 
 class SendOrderToProduction {
@@ -14,6 +13,7 @@ class SendOrderToProduction {
   String molhoOrMaionese;
   String meatPoint;
   String name;
+  String date;
   bool cooking;
   bool orderFinishedCook;
   bool inDelivery;
@@ -29,6 +29,7 @@ class SendOrderToProduction {
       required this.orderFinishedCook,
       required this.inDelivery,
       required this.completed,
+      required this.date,
       required this.cooking,
       required this.id,
       required this.name,
@@ -40,7 +41,9 @@ class SendOrderToProduction {
     try {
       await http.post(Uri.parse(url),
           body: json.encode({
+            "date": date,
             "is_delivery": isDelivey,
+            "order_date": date,
             "meat_point": meatPoint,
             "sachets": wantSachets,
             "molho_ou_maionese": molhoOrMaionese,
@@ -56,10 +59,7 @@ class SendOrderToProduction {
             "order_total_price": total,
           }),
           headers: _setHeaders());
-    } catch (e) {
-      print('erro aqui mano');
-      print(e);
-    }
+    } catch (e) {}
   }
 }
 

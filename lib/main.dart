@@ -13,11 +13,35 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:workmanager/workmanager.dart';
 import 'l10n/l10n.dart';
+
+backgroundApp() {
+  main();
+  print('background');
+}
+
+const task = 'backgroundService';
+void callbackDispatcher() {
+  Workmanager().executeTask((taskName, inputData) {
+    switch (taskName) {
+      case 'backgroundService':
+        backgroundApp();
+        break;
+      default:
+    }
+    return Future.value(true);
+  });
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   await Firebase.initializeApp();
+  Workmanager().registerOneOffTask(
+    DateTime.now().millisecondsSinceEpoch.toString(),
+    task,
+  );
   runApp(const MyApp());
 }
 

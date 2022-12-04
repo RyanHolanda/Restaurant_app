@@ -8,9 +8,7 @@ class AdressAutoCompleteRepo {
       if (response.statusCode == 200) {
         return response.body;
       }
-    } catch (_) {
-      print('erro adress');
-    }
+    } catch (_) {}
     return null;
   }
 }

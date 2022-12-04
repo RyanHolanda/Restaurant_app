@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:car_app/firebase/storage/add_user_data.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
@@ -11,8 +12,8 @@ part 'order_state.dart';
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
   OrderBloc() : super(OrderStateOrderInitial()) {
     on<OrderEventSendOrderToProduction>((event, emit) async {
-      print('sending order');
       await SendOrderToProduction(
+              date: event.date,
               meatPoint: event.meatPoint,
               molhoOrMaionese: event.molhoOrMaionese,
               wantSachets: event.wantSachets,
@@ -29,7 +30,27 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
               total: event.total)
           .sendOrderToProduction();
       emit(OrderStateOrderSent());
-      print('order sent');
+    });
+
+    on<AddUserPastOrders>((event, emit) async {
+      await UserOrders(
+              date: event.date,
+              adress: event.adress,
+              completed: event.completed,
+              cooking: event.cooking,
+              id: event.id,
+              inDelivery: event.inDelivery,
+              isDelivey: event.isDelivery,
+              item: event.item,
+              meatPoint: event.meatPoint,
+              molhoOrMaionese: event.molhoOrMaionese,
+              name: event.name,
+              orderFinishedCook: event.orderFinishedCook,
+              paymentMethod: event.paymentMethod,
+              total: event.total,
+              wantSachets: event.wantSachets)
+          .addUserOrdersToDatabase();
+      emit(OrderStateOrderAddedToPastOrders());
     });
   }
 }

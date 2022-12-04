@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:car_app/blocs/app_bloc.dart';
 import 'package:car_app/firebase/auth/auth.dart';
 import 'package:car_app/firebase/storage/add_user_data.dart';
@@ -14,10 +16,16 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   final FocusNode nameFocusnode = FocusNode();
+
   final FocusNode numberFocusnode = FocusNode();
 
   @override
@@ -60,11 +68,16 @@ class ProfileScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          PageTransition(
-                              child: const InputAdressScreen(),
-                              type: PageTransitionType.bottomToTop)),
+                      onTap: () {
+                        Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: const InputAdressScreen(),
+                                    type: PageTransitionType.bottomToTop))
+                            .whenComplete(() {
+                          setState(() {});
+                        });
+                      },
                       child: Container(
                         padding: const EdgeInsets.all(15),
                         height: 120,
@@ -273,8 +286,7 @@ class ProfileScreen extends StatelessWidget {
                                                   .colorScheme
                                                   .primary),
                                           hintText:
-                                              AppLocalizations.of(context)!
-                                                  .addANumber,
+                                              '${AppLocalizations.of(context)!.addANumber} "(00)9123456789"',
                                           contentPadding:
                                               const EdgeInsets.symmetric(
                                                   vertical: 10),

@@ -27,7 +27,6 @@ class CreatePixToPay {
       final test = Map<String, dynamic>.from(result);
       return GetPixPaymentId(id: test['id']);
     } catch (e) {
-      print(e);
       return createPixToPay();
     }
   }
@@ -55,7 +54,6 @@ class GetPixData {
         throw Exception(response.reasonPhrase);
       }
     } catch (e) {
-      print(e);
       return getPixInfo();
     }
   }

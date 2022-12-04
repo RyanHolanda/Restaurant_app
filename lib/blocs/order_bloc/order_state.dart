@@ -10,3 +10,5 @@ abstract class OrderState extends Equatable {
 class OrderStateOrderInitial extends OrderState {}
 
 class OrderStateOrderSent extends OrderState {}
+
+class OrderStateOrderAddedToPastOrders extends OrderState {}

@@ -35,47 +35,37 @@ class _MyBottomNavState extends State<MyBottomNav> {
   @override
   Widget build(BuildContext context) {
     Database().getUserDistance();
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state is HomeStateDelivery) {
-          print('object');
-        }
-        if (state is HomeStatePickUp) {
-          print('pick up');
-        }
-        return Scaffold(
-          body: screens[widget.selectedIndex],
-          bottomNavigationBar: BottomNavigationBar(
-            elevation: 0,
-            showUnselectedLabels: true,
-            selectedItemColor: Theme.of(context).colorScheme.primary,
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            showSelectedLabels: true,
-            selectedFontSize: 10,
-            unselectedFontSize: 10,
-            selectedIconTheme: IconThemeData(size: 18),
-            unselectedIconTheme: IconThemeData(size: 18),
-            unselectedLabelStyle: TextStyle(height: 0),
-            currentIndex: widget.selectedIndex,
-            onTap: onItemTapped,
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                  icon: const Icon(Bootstrap.house),
-                  label: AppLocalizations.of(context)!.home),
-              BottomNavigationBarItem(
-                  icon: const Icon(BoxIcons.bx_food_menu),
-                  label: AppLocalizations.of(context)!.orders),
-              BottomNavigationBarItem(
-                  icon: const Icon(Bootstrap.cart),
-                  label: AppLocalizations.of(context)!.cart),
-              BottomNavigationBarItem(
-                  icon: const Icon(Bootstrap.person),
-                  label: AppLocalizations.of(context)!.profile)
-            ],
-          ),
-        );
-      },
+    return Scaffold(
+      body: screens[widget.selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
+        showUnselectedLabels: true,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        showSelectedLabels: true,
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
+        selectedIconTheme: IconThemeData(size: 18),
+        unselectedIconTheme: IconThemeData(size: 18),
+        unselectedLabelStyle: TextStyle(height: 0),
+        currentIndex: widget.selectedIndex,
+        onTap: onItemTapped,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+              icon: const Icon(Bootstrap.house),
+              label: AppLocalizations.of(context)!.home),
+          BottomNavigationBarItem(
+              icon: const Icon(BoxIcons.bx_food_menu),
+              label: AppLocalizations.of(context)!.orders),
+          BottomNavigationBarItem(
+              icon: const Icon(Bootstrap.cart),
+              label: AppLocalizations.of(context)!.cart),
+          BottomNavigationBarItem(
+              icon: const Icon(Bootstrap.person),
+              label: AppLocalizations.of(context)!.profile)
+        ],
+      ),
     );
   }
 }
