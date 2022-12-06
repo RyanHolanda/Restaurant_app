@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:car_app/firebase/storage/add_user_data.dart';
 import 'package:car_app/models/user_data_models.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -38,21 +41,111 @@ class _OrdersScreenState extends State<OrdersScreen> {
   }
 }
 
-class OrdersList extends StatelessWidget {
+class OrdersList extends StatefulWidget {
   const OrdersList({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<OrdersList> createState() => _OrdersListState();
+}
+
+class _OrdersListState extends State<OrdersList> {
+  @override
   Widget build(BuildContext context) {
+    final myOrders = userOrdersID.reversed.toList();
     return Scaffold(
-      body: Center(
-        child: ListView.builder(
-          itemCount: userOrdersID.length,
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) {
-            return Text(userOrdersID[index].date.toString());
-          },
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+          child: Center(
+            child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: myOrders.length,
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                Timer.periodic(const Duration(minutes: 1), (timer) {
+                  Database().getUserOrders();
+                  setState(() {});
+                });
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 15),
+                      child: Text(myOrders[index].date!),
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        color: Theme.of(context).colorScheme.tertiary,
+                        height: 120,
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${AppLocalizations.of(context)!.id} ${myOrders[index].id!.toString()}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: Text(myOrders[index].isDelivey!
+                                      ? AppLocalizations.of(context)!.delivery
+                                      : AppLocalizations.of(context)!.pickUp),
+                                ),
+                                Text(
+                                    'R\$ ${myOrders[index].total!.toStringAsFixed(2)}'),
+                                const Spacer(),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 0),
+                                  child: Text(
+                                    myOrders[index].completed!
+                                        ? AppLocalizations.of(context)!
+                                            .completed
+                                        : myOrders[index].cooking!
+                                            ? AppLocalizations.of(context)!
+                                                .cooking
+                                            : myOrders[index].inDelivery!
+                                                ? AppLocalizations.of(context)!
+                                                    .inDelivery
+                                                : myOrders[index]
+                                                        .orderFinishedCook!
+                                                    ? AppLocalizations.of(
+                                                            context)!
+                                                        .finishedCook
+                                                    : AppLocalizations.of(
+                                                            context)!
+                                                        .orderReceived,
+                                    style: const TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ),
+                            const Spacer(),
+                            Icon(myOrders[index].completed!
+                                ? Icons.check
+                                : myOrders[index].inDelivery!
+                                    ? Icons.motorcycle
+                                    : Icons.alarm)
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

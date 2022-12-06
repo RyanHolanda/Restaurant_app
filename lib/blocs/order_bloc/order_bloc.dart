@@ -13,6 +13,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   OrderBloc() : super(OrderStateOrderInitial()) {
     on<OrderEventSendOrderToProduction>((event, emit) async {
       await SendOrderToProduction(
+              howMuchGonnaPay: event.howMuchGonnaPay,
+              clientPIXKey: event.clientPIXKey,
               date: event.date,
               meatPoint: event.meatPoint,
               molhoOrMaionese: event.molhoOrMaionese,

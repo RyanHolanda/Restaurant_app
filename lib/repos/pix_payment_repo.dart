@@ -22,7 +22,6 @@ class CreatePixToPay {
                 "description": "Pagamento via PIX a Black Beard Burguer",
               }),
               headers: _setHeaders());
-
       final result = json.decode(utf8.decode(response.bodyBytes));
       final test = Map<String, dynamic>.from(result);
       return GetPixPaymentId(id: test['id']);

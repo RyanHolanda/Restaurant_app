@@ -15,6 +15,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ApprovedPaymentScreen extends StatefulWidget {
   ApprovedPaymentScreen({
+    this.howMuchGonnaPay,
+    this.clientPIXKey,
     required this.isDelivery,
     required this.meatPoint,
     required this.molhoOrMaionese,
@@ -28,6 +30,8 @@ class ApprovedPaymentScreen extends StatefulWidget {
   double total;
   bool isDelivery;
   String meatPoint;
+  String? clientPIXKey;
+  String? howMuchGonnaPay;
   String wantSachets;
   String molhoOrMaionese;
 
@@ -68,6 +72,8 @@ class _ApprovedPaymentScreenState extends State<ApprovedPaymentScreen>
                   context,
                   PageTransition(
                       child: ReceiptScreen(
+                          clientPIXKey: widget.clientPIXKey ?? '',
+                          howMuchGonnaPay: widget.howMuchGonnaPay ?? '',
                           isDelivery: widget.isDelivery,
                           meatPoint: widget.meatPoint,
                           molhoOrMaionese: widget.molhoOrMaionese,
@@ -89,6 +95,8 @@ class ReceiptScreen extends StatelessWidget {
       required this.total,
       required this.paymentMethod,
       required this.meatPoint,
+      required this.clientPIXKey,
+      required this.howMuchGonnaPay,
       required this.molhoOrMaionese,
       required this.wantSachets});
 
@@ -96,6 +104,8 @@ class ReceiptScreen extends StatelessWidget {
   String meatPoint;
   String wantSachets;
   bool isDelivery;
+  String clientPIXKey;
+  String howMuchGonnaPay;
   String molhoOrMaionese;
   String paymentMethod;
 
@@ -106,7 +116,7 @@ class ReceiptScreen extends StatelessWidget {
         List<CartModel> itemsOrdered = event.cartItems;
         final itemsOrderedToList = itemsOrdered
             .map((value) =>
-                '${value.quantity}x ${value.name} | ${value.observations} |')
+                '${value.quantity}x ${value.name} | ${value.observations ?? 'Sem observações'} |')
             .toList();
         final generateId = DateTime.now().microsecondsSinceEpoch;
         final getDate =
@@ -129,6 +139,8 @@ class ReceiptScreen extends StatelessWidget {
             completed: false,
             id: generateId));
         context.read<OrderBloc>().add(OrderEventSendOrderToProduction(
+            clientPIXKey: clientPIXKey,
+            howMuchGonnaPay: howMuchGonnaPay,
             date: getDate,
             isDelivery: isDelivery,
             meatPoint: meatPoint,
@@ -153,9 +165,6 @@ class ReceiptScreen extends StatelessWidget {
                 color: Theme.of(context).colorScheme.primary,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    context
-                        .read<CartBloc>()
-                        .add(DeleteItemFromCart(item: itemsOrdered.single));
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

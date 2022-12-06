@@ -13,6 +13,8 @@ class OrderEventSendOrderToProduction extends OrderEvent {
   final String item;
   final double total;
   final String date;
+  final String howMuchGonnaPay;
+  final String clientPIXKey;
   final String adress;
   final String paymentMethod;
   final String wantSachets;
@@ -30,6 +32,8 @@ class OrderEventSendOrderToProduction extends OrderEvent {
     required this.date,
     required this.item,
     required this.total,
+    required this.clientPIXKey,
+    required this.howMuchGonnaPay,
     required this.adress,
     required this.paymentMethod,
     required this.wantSachets,

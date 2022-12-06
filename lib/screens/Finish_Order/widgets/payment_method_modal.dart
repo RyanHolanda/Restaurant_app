@@ -40,7 +40,7 @@ class ShowMyModal extends StatelessWidget {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(top: 50, left: 8, bottom: 15),
+                        const EdgeInsets.only(top: 30, left: 8, bottom: 15),
                     child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -62,6 +62,7 @@ class ShowMyModal extends StatelessWidget {
                                   child: BlocBuilder<HomeBloc, HomeState>(
                                     builder: (context, state) {
                                       return ConfirmPaymentMethodScreen(
+                                          payymentMethodID: 'PIX',
                                           isDelivery: state is HomeStateDelivery
                                               ? true
                                               : false,
@@ -91,58 +92,6 @@ class ShowMyModal extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Container(
-                      height: 50,
-                      color: Theme.of(context).colorScheme.tertiary,
-                      child: MaterialButton(
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Bootstrap.credit_card_2_front,
-                              color: Theme.of(context).colorScheme.onTertiary,
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Text(AppLocalizations.of(context)!.creditCard)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Container(
-                      height: 50,
-                      color: Theme.of(context).colorScheme.tertiary,
-                      child: MaterialButton(
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Bootstrap.credit_card_2_front,
-                              color: Theme.of(context).colorScheme.onTertiary,
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Text(AppLocalizations.of(context)!.debitCard)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding:
                         const EdgeInsets.only(top: 25, left: 8, bottom: 15),
@@ -160,7 +109,29 @@ class ShowMyModal extends StatelessWidget {
                       height: 50,
                       color: Theme.of(context).colorScheme.tertiary,
                       child: MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: BlocBuilder<HomeBloc, HomeState>(
+                                    builder: (context, state) {
+                                      return ConfirmPaymentMethodScreen(
+                                          isDelivery: state is HomeStateDelivery
+                                              ? true
+                                              : false,
+                                          meatPoint: meatPoint,
+                                          molhoOrMaionese: molhoOrMaionese,
+                                          wantSachets: wantSachets,
+                                          total: total,
+                                          icon: Bootstrap.currency_dollar,
+                                          payymentMethodID: 'Dinheiro',
+                                          paymentMethod:
+                                              AppLocalizations.of(context)!
+                                                  .cash);
+                                    },
+                                  ),
+                                  type: PageTransitionType.fade));
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -186,7 +157,28 @@ class ShowMyModal extends StatelessWidget {
                       height: 50,
                       color: Theme.of(context).colorScheme.tertiary,
                       child: MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: BlocBuilder<HomeBloc, HomeState>(
+                                    builder: (context, state) {
+                                      return ConfirmPaymentMethodScreen(
+                                          isDelivery: state is HomeStateDelivery
+                                              ? true
+                                              : false,
+                                          meatPoint: meatPoint,
+                                          molhoOrMaionese: molhoOrMaionese,
+                                          wantSachets: wantSachets,
+                                          total: total,
+                                          icon: Bootstrap.credit_card_2_front,
+                                          payymentMethodID: 'Cartao',
+                                          paymentMethod:
+                                              '${AppLocalizations.of(context)!.debitCard} / ${AppLocalizations.of(context)!.creditCard}');
+                                    },
+                                  ),
+                                  type: PageTransitionType.fade));
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [

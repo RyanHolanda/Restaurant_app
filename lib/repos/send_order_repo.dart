@@ -17,7 +17,9 @@ class SendOrderToProduction {
   bool cooking;
   bool orderFinishedCook;
   bool inDelivery;
+  String clientPIXKey;
   bool completed;
+  String howMuchGonnaPay;
   int id;
 
   SendOrderToProduction(
@@ -25,6 +27,7 @@ class SendOrderToProduction {
       required this.isDelivey,
       required this.wantSachets,
       required this.molhoOrMaionese,
+      required this.howMuchGonnaPay,
       required this.meatPoint,
       required this.orderFinishedCook,
       required this.inDelivery,
@@ -35,6 +38,7 @@ class SendOrderToProduction {
       required this.name,
       required this.adress,
       required this.item,
+      required this.clientPIXKey,
       required this.total});
 
   Future sendOrderToProduction() async {
@@ -57,6 +61,8 @@ class SendOrderToProduction {
             "order_in_delivery": inDelivery,
             "order_completed": completed,
             "order_total_price": total,
+            "client_pix_key": clientPIXKey,
+            "client_will_pay": howMuchGonnaPay
           }),
           headers: _setHeaders());
     } catch (e) {}
