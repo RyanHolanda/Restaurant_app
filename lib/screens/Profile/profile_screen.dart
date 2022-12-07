@@ -277,16 +277,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               ?.toString()),
                                       textAlign: TextAlign.start,
                                       decoration: InputDecoration(
-                                          prefixText:
-                                              userNumberModelString == null
-                                                  ? ''
-                                                  : '+55 ',
+                                          prefixText: '+55 ',
                                           prefixStyle: TextStyle(
                                               color: Theme.of(context)
                                                   .colorScheme
                                                   .primary),
-                                          hintText:
-                                              '${AppLocalizations.of(context)!.addANumber} "(00)9123456789"',
+                                          hintText: "(00)9123456789",
                                           contentPadding:
                                               const EdgeInsets.symmetric(
                                                   vertical: 10),

@@ -1,5 +1,6 @@
 import 'package:car_app/blocs/cart_bloc/cart_bloc.dart';
 import 'package:car_app/blocs/home_bloc/home_bloc.dart';
+import 'package:car_app/models/store_status_model.dart';
 import 'package:car_app/models/user_data_models.dart';
 import 'package:car_app/screens/Finish_Order/finish_order_screen.dart';
 import 'package:lottie/lottie.dart';
@@ -53,7 +54,9 @@ class _CartScreenState extends State<CartScreen> {
             : Scaffold(
                 bottomNavigationBar: SafeArea(
                   child: FinishOrderWidget(
-                      shippingPrice: shippingPrice, total: total!),
+                      storeStatus: storeStatus[0].storeStatus,
+                      shippingPrice: shippingPrice,
+                      total: total!),
                 ),
                 appBar: AppBar(
                   title: Text(
@@ -103,15 +106,18 @@ class _CartScreenState extends State<CartScreen> {
 class FinishOrderWidget extends StatelessWidget {
   const FinishOrderWidget({
     Key? key,
+    required this.storeStatus,
     required this.shippingPrice,
     required this.total,
   }) : super(key: key);
 
   final double shippingPrice;
   final double total;
+  final String storeStatus;
 
   @override
   Widget build(BuildContext context) {
+    print(storeStatus);
     return Padding(
       padding: const EdgeInsets.all(20),
       child: ClipRRect(
@@ -143,14 +149,54 @@ class FinishOrderWidget extends StatelessWidget {
                     child: MaterialButton(
                       color: Theme.of(context).colorScheme.primary,
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: FinishOrderScreen(
-                                  shippingPrice: shippingPrice,
-                                  total: total,
-                                ),
-                                type: PageTransitionType.bottomToTop));
+                        if (storeStatus == 'Abrir loja') {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) => Container(
+                              color: Theme.of(context).colorScheme.secondary,
+                              height: MediaQuery.of(context).size.height / 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(25),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.weAreClosed,
+                                      style: GoogleFonts.inriaSans(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: TextButton(
+                                        onPressed: () async {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          'Ok',
+                                          style: TextStyle(color: Colors.white),
+                                        )),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        } else {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: FinishOrderScreen(
+                                    shippingPrice: shippingPrice,
+                                    total: total,
+                                  ),
+                                  type: PageTransitionType.bottomToTop));
+                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:car_app/firebase/storage/add_user_data.dart';
 import 'package:car_app/models/user_data_models.dart';
 import 'package:flutter/material.dart';
@@ -64,10 +63,6 @@ class _OrdersListState extends State<OrdersList> {
               itemCount: myOrders.length,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                Timer.periodic(const Duration(minutes: 1), (timer) {
-                  Database().getUserOrders();
-                  setState(() {});
-                });
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -88,11 +83,6 @@ class _OrdersListState extends State<OrdersList> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  '${AppLocalizations.of(context)!.id} ${myOrders[index].id!.toString()}',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
                                 Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 5),
@@ -103,40 +93,26 @@ class _OrdersListState extends State<OrdersList> {
                                 Text(
                                     'R\$ ${myOrders[index].total!.toStringAsFixed(2)}'),
                                 const Spacer(),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 0),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.8,
                                   child: Text(
-                                    myOrders[index].completed!
-                                        ? AppLocalizations.of(context)!
-                                            .completed
-                                        : myOrders[index].cooking!
-                                            ? AppLocalizations.of(context)!
-                                                .cooking
-                                            : myOrders[index].inDelivery!
-                                                ? AppLocalizations.of(context)!
-                                                    .inDelivery
-                                                : myOrders[index]
-                                                        .orderFinishedCook!
-                                                    ? AppLocalizations.of(
-                                                            context)!
-                                                        .finishedCook
-                                                    : AppLocalizations.of(
-                                                            context)!
-                                                        .orderReceived,
-                                    style: const TextStyle(
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.bold),
+                                    myOrders[index]
+                                        .item!
+                                        .replaceAll('[', '')
+                                        .replaceAll(']', '')
+                                        .replaceAll('Sem observações', '')
+                                        .replaceAll('|', ''),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 )
                               ],
                             ),
                             const Spacer(),
-                            Icon(myOrders[index].completed!
-                                ? Icons.check
-                                : myOrders[index].inDelivery!
-                                    ? Icons.motorcycle
-                                    : Icons.alarm)
+                            Icon(myOrders[index].isDelivey!
+                                ? Icons.motorcycle
+                                : Icons.food_bank_outlined)
                           ],
                         ),
                       ),

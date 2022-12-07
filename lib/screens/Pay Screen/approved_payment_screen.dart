@@ -139,6 +139,7 @@ class ReceiptScreen extends StatelessWidget {
             completed: false,
             id: generateId));
         context.read<OrderBloc>().add(OrderEventSendOrderToProduction(
+            clientNumber: userNumberModelString.toString(),
             clientPIXKey: clientPIXKey,
             howMuchGonnaPay: howMuchGonnaPay,
             date: getDate,

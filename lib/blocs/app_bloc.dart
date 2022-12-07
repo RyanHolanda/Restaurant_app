@@ -24,7 +24,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             email: event.email,
             password: event.password,
             phoneNumber: event.phoneNumber);
-        Database().addUserNumber(event.phoneNumber);
+        await Database().addUserNumber(event.phoneNumber);
         add(AppEventGetData());
       } on FirebaseAuthException catch (e) {
         emit(AppStateAuthError(
@@ -56,6 +56,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         );
         add(AppEventGetData());
       } on FirebaseAuthException catch (e) {
+        print('error');
         emit(AppStateAuthError(
             isLoading: false, authError: AuthError.from(e).text));
         authErrorLogin = state.authError.toString();

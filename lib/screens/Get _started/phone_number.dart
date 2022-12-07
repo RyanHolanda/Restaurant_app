@@ -25,23 +25,23 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
       listener: (context, state) {
         if (state is AppStateAuthError) {
           switch (authErrorRegister) {
-          case 'Invalid E-mail error':
-            authErrorRegister = AppLocalizations.of(context)!.invalidEmail;
-            Navigator.pop(context);
-            Navigator.pop(context);
-            Navigator.pop(context);
-            break;
-          case 'Unkwnown error':
-            authErrorRegister = AppLocalizations.of(context)!.unknownError;
-            break;
-          case 'E-mail already in use error':
-            authErrorRegister =
-                AppLocalizations.of(context)!.emailAlreadyExists;
-            Navigator.pop(context);
-            Navigator.pop(context);
-            Navigator.pop(context);
-            break;
-        }
+            case 'Invalid E-mail error':
+              authErrorRegister = AppLocalizations.of(context)!.invalidEmail;
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+              break;
+            case 'Unkwnown error':
+              authErrorRegister = AppLocalizations.of(context)!.unknownError;
+              break;
+            case 'E-mail already in use error':
+              authErrorRegister =
+                  AppLocalizations.of(context)!.emailAlreadyExists;
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+              break;
+          }
           showDialog(
               context: context,
               builder: (context) => CupertinoAlertDialog(
@@ -175,16 +175,14 @@ class _PhoneRegistrationScreenState extends State<PhoneRegistrationScreen> {
                                 context.read<AppBloc>().add(AppEventRegister(
                                     email: emailController.text,
                                     password: passwordcontroller.text,
-                                    phoneNumber:
-                                        int.parse(phoneController.text)));
+                                    phoneNumber: phoneController.text));
                               }
                             },
                             child: Align(
                               alignment: Alignment.center,
                               child: state.isLoading
                                   ? const CircularProgressIndicator(
-                                      color:
-                                          Colors.white,
+                                      color: Colors.white,
                                     )
                                   : const Icon(
                                       Icons.navigate_next,

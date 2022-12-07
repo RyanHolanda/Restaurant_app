@@ -23,7 +23,7 @@ class AppEventlogIn extends AppEvent {
 
 @immutable
 class AppEventRegister extends AppEvent {
-  final int phoneNumber;
+  final String phoneNumber;
   final String email;
   final String password;
   const AppEventRegister(

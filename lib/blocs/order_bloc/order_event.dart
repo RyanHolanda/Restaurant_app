@@ -12,6 +12,7 @@ abstract class OrderEvent extends Equatable {
 class OrderEventSendOrderToProduction extends OrderEvent {
   final String item;
   final double total;
+  final String clientNumber;
   final String date;
   final String howMuchGonnaPay;
   final String clientPIXKey;
@@ -29,6 +30,7 @@ class OrderEventSendOrderToProduction extends OrderEvent {
   final int id;
 
   const OrderEventSendOrderToProduction({
+    required this.clientNumber,
     required this.date,
     required this.item,
     required this.total,

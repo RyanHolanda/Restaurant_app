@@ -7,6 +7,7 @@ class SendOrderToProduction {
   String item;
   double total;
   String adress;
+  String clientNumber;
   bool isDelivey;
   String paymentMethod;
   String wantSachets;
@@ -24,6 +25,7 @@ class SendOrderToProduction {
 
   SendOrderToProduction(
       {required this.paymentMethod,
+      required this.clientNumber,
       required this.isDelivey,
       required this.wantSachets,
       required this.molhoOrMaionese,
@@ -45,6 +47,7 @@ class SendOrderToProduction {
     try {
       await http.post(Uri.parse(url),
           body: json.encode({
+            "client_number": clientNumber,
             "date": date,
             "is_delivery": isDelivey,
             "order_date": date,

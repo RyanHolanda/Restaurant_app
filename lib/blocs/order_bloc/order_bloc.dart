@@ -2,8 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:car_app/firebase/storage/add_user_data.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-
-import 'package:car_app/models/cart_model.dart';
 import 'package:car_app/repos/send_order_repo.dart';
 
 part 'order_event.dart';
@@ -13,6 +11,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   OrderBloc() : super(OrderStateOrderInitial()) {
     on<OrderEventSendOrderToProduction>((event, emit) async {
       await SendOrderToProduction(
+              clientNumber: event.clientNumber,
               howMuchGonnaPay: event.howMuchGonnaPay,
               clientPIXKey: event.clientPIXKey,
               date: event.date,

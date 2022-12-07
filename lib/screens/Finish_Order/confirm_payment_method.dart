@@ -17,7 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../blocs/home_bloc/home_bloc.dart';
 import '../../blocs/payment_bloc/payment_bloc.dart';
-import '../Pay Screen/Pix/approved_payment_screen.dart';
+import '../Pay Screen/approved_payment_screen.dart';
 import '../Pay Screen/Pix/pix_screen.dart';
 
 class ConfirmPaymentMethodScreen extends StatefulWidget {
