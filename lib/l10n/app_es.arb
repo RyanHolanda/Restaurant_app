@@ -81,6 +81,7 @@
     "status":"Estado",
     "value":"Valor",
     "pixKey":"Tu clave PIX",
+    "minimumOrderPrice":"Lo sentimos, solo aceptamos pedidos superiores a R$ 20,00",
     "weAreClosed":"Lo sentimos, estamos cerrados en este momento, pero cuando abramos puedes ordenar!",
     "id":"Id:",
     "dontCloseApp":"¡No cierre la aplicación antes o unos segundos después de realizar el pago! o su pago no será aceptado",

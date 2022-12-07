@@ -57,70 +57,67 @@ class _OrdersListState extends State<OrdersList> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
-          child: Center(
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: myOrders.length,
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 15),
-                      child: Text(myOrders[index].date!),
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Container(
-                        padding: const EdgeInsets.all(15),
-                        color: Theme.of(context).colorScheme.tertiary,
-                        height: 120,
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  child: Text(myOrders[index].isDelivey!
-                                      ? AppLocalizations.of(context)!.delivery
-                                      : AppLocalizations.of(context)!.pickUp),
+          child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: myOrders.length,
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 15),
+                    child: Text(myOrders[index].date!),
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      color: Theme.of(context).colorScheme.tertiary,
+                      height: 120,
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                child: Text(myOrders[index].isDelivey!
+                                    ? AppLocalizations.of(context)!.delivery
+                                    : AppLocalizations.of(context)!.pickUp),
+                              ),
+                              Text(
+                                  'R\$ ${myOrders[index].total!.toStringAsFixed(2)}'),
+                              const Spacer(),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 1.8,
+                                child: Text(
+                                  myOrders[index]
+                                      .item!
+                                      .replaceAll('[', '')
+                                      .replaceAll(']', '')
+                                      .replaceAll('Sem observações', '')
+                                      .replaceAll('|', ''),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                Text(
-                                    'R\$ ${myOrders[index].total!.toStringAsFixed(2)}'),
-                                const Spacer(),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 1.8,
-                                  child: Text(
-                                    myOrders[index]
-                                        .item!
-                                        .replaceAll('[', '')
-                                        .replaceAll(']', '')
-                                        .replaceAll('Sem observações', '')
-                                        .replaceAll('|', ''),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                )
-                              ],
-                            ),
-                            const Spacer(),
-                            Icon(myOrders[index].isDelivey!
-                                ? Icons.motorcycle
-                                : Icons.food_bank_outlined)
-                          ],
-                        ),
+                              )
+                            ],
+                          ),
+                          const Spacer(),
+                          Icon(myOrders[index].isDelivey!
+                              ? Icons.motorcycle
+                              : Icons.food_bank_outlined)
+                        ],
                       ),
-                    )
-                  ],
-                );
-              },
-            ),
+                    ),
+                  )
+                ],
+              );
+            },
           ),
         ),
       ),

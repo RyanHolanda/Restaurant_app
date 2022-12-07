@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
           Navigator.push(
               context,
               PageTransition(
-                  child: CartScreen(),
+                  child: const CartScreen(),
                   type: PageTransitionType.rightToLeftWithFade));
         }
       },
@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                 child: Text(
                   AppLocalizations.of(context)!.mostordered,
                   style: GoogleFonts.inriaSans(
-                      fontWeight: FontWeight.bold, fontSize: 18),
+                      fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
               const MostOrderedBurguersList(
@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                 child: Text(
                   AppLocalizations.of(context)!.menu,
                   style: GoogleFonts.inriaSans(
-                      fontWeight: FontWeight.bold, fontSize: 18),
+                      fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
               BlocProvider(
@@ -94,12 +94,12 @@ class SearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50, left: 15, right: 15),
+      padding: const EdgeInsets.only(top: 25, left: 15, right: 15),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          height: 60,
+          height: 55,
           child: TextField(
             readOnly: true,
             onTap: () => Navigator.push(

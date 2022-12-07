@@ -60,6 +60,7 @@
     "ifYouNeedChangeWeGonnaPayinPix":"If you need change, we gonna pay to you in PIX, plase insert your PIX Key below!",
     "value":"Value",
     "pixKey":"Your PIX key",
+    "minimumOrderPrice":"Sorry, we only accept orders above R$20,00",
     "weAreClosed":"Sorry, we are closed right now, but when we open you can order!",
     "institution":"Institution:",
     "amount":"Amount:",

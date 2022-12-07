@@ -53,10 +53,14 @@ class _CartScreenState extends State<CartScreen> {
             ? const EmptyCartScreen()
             : Scaffold(
                 bottomNavigationBar: SafeArea(
-                  child: FinishOrderWidget(
-                      storeStatus: storeStatus[0].storeStatus,
-                      shippingPrice: shippingPrice,
-                      total: total!),
+                  child: BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      return FinishOrderWidget(
+                          storeStatus: storeStatus[0].storeStatus,
+                          shippingPrice: shippingPrice,
+                          total: state is HomeStateDelivery ? total! : sum);
+                    },
+                  ),
                 ),
                 appBar: AppBar(
                   title: Text(
@@ -117,107 +121,123 @@ class FinishOrderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(storeStatus);
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(0),
-          child: SizedBox(
-            height: 90,
-            child: Column(
-              children: [
-                Row(
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(0),
+              child: SizedBox(
+                height: 90,
+                child: Column(
                   children: [
-                    Text(
-                      '${AppLocalizations.of(context)!.shipping} R\$ ${shippingPrice.toStringAsFixed(2).replaceAll(".", ",")}',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    Row(
+                      children: [
+                        state is HomeStateDelivery
+                            ? Text(
+                                '${AppLocalizations.of(context)!.shipping} R\$ ${shippingPrice.toStringAsFixed(2).replaceAll(".", ",")}',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              )
+                            : const SizedBox.shrink(),
+                        const Spacer(),
+                        Text(
+                          'Total : R\$ ${total.toStringAsFixed(2).replaceAll('.', ',')}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
                     ),
                     const Spacer(),
-                    Text(
-                      'Total : R\$ ${total.toStringAsFixed(2).replaceAll('.', ',')}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                ),
-                const Spacer(),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: SizedBox(
-                    height: 50,
-                    child: MaterialButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: () {
-                        if (storeStatus == 'Abrir loja') {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) => Container(
-                              color: Theme.of(context).colorScheme.secondary,
-                              height: MediaQuery.of(context).size.height / 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(25),
-                                    child: Text(
-                                      AppLocalizations.of(context)!.weAreClosed,
-                                      style: GoogleFonts.inriaSans(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18),
-                                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: SizedBox(
+                        height: 50,
+                        child: MaterialButton(
+                          color: Theme.of(context).colorScheme.primary,
+                          onPressed: () {
+                            if (storeStatus == 'Abrir loja') {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) => Container(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  height:
+                                      MediaQuery.of(context).size.height / 5,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(25),
+                                        child: Text(
+                                          AppLocalizations.of(context)!
+                                              .weAreClosed,
+                                          style: GoogleFonts.inriaSans(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: TextButton(
+                                            onPressed: () async {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text(
+                                              'Ok',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            )),
+                                      )
+                                    ],
                                   ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: TextButton(
-                                        onPressed: () async {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text(
-                                          'Ok',
-                                          style: TextStyle(color: Colors.white),
-                                        )),
-                                  )
-                                ],
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      child: FinishOrderScreen(
+                                        shippingPrice:
+                                            state is HomeStateDelivery
+                                                ? shippingPrice
+                                                : 0,
+                                        total: total,
+                                      ),
+                                      type: PageTransitionType.bottomToTop));
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Bootstrap.check,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
-                            ),
-                          );
-                        } else {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: FinishOrderScreen(
-                                    shippingPrice: shippingPrice,
-                                    total: total,
-                                  ),
-                                  type: PageTransitionType.bottomToTop));
-                        }
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Bootstrap.check,
-                            color: Theme.of(context).colorScheme.secondary,
+                              Text(
+                                AppLocalizations.of(context)!.finishMyOrder,
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                              )
+                            ],
                           ),
-                          Text(
-                            AppLocalizations.of(context)!.finishMyOrder,
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary),
-                          )
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          )),
+              )),
+        );
+      },
     );
   }
 }

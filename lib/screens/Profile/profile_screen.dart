@@ -30,6 +30,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Database().getUserAdress();
+    Database().getUserName();
+    Database().getUserNumber();
+    Database().getUserDistance();
     final user = Auth().currentUser;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -389,7 +393,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     }
 
                                                     await signOut();
-                                                    // ignore: use_build_context_synchronously
                                                     Navigator.pop(context);
                                                   },
                                                   child: Text(

@@ -42,6 +42,7 @@ class UserAdress extends StatelessWidget {
                       child: Text(
                         AppLocalizations.of(context)!.receiveYourOrderIn30m1h,
                         style: GoogleFonts.inriaSans(
+                            fontSize: 12,
                             color: Theme.of(context).colorScheme.onTertiary,
                             fontWeight: FontWeight.bold),
                       ),
@@ -54,6 +55,7 @@ class UserAdress extends StatelessWidget {
                           userAdressModelString ??
                               AppLocalizations.of(context)!.addAnAdress,
                           style: GoogleFonts.inriaSans(
+                              fontSize: 12,
                               color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.bold),
                         ),

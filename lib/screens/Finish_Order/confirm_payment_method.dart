@@ -304,6 +304,32 @@ class _ConfirmPaymentMethodScreenState
                                             padding: MaterialStateProperty.all(
                                                 const EdgeInsets.all(15))),
                                         onPressed: () async {
+                                          if (widget.total < 20) {
+                                            showTopSnackBar(
+                                                Overlay.of(context)!,
+                                                CustomSnackBar.error(
+                                                    message:
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .minimumOrderPrice,
+                                                    textStyle:
+                                                        GoogleFonts.inriaSans(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSecondary),
+                                                    icon: const Icon(
+                                                      Bootstrap.cash,
+                                                      size: 70,
+                                                      color: Color.fromARGB(
+                                                          56, 0, 0, 0),
+                                                    )),
+                                                onTap: () {},
+                                                displayDuration: const Duration(
+                                                    milliseconds: 2000));
+                                          }
                                           if (userNameString == null ||
                                               userNameString == null ||
                                               userAdressModelString == null) {
@@ -352,7 +378,8 @@ class _ConfirmPaymentMethodScreenState
                                           if (userAdressModelString != null &&
                                               userNameString != null &&
                                               userNumberModelString != null) {
-                                            if (widget.paymentMethod == 'PIX') {
+                                            if (widget.paymentMethod == 'PIX' &&
+                                                widget.total > 20) {
                                               final user = Auth().currentUser;
                                               context.read<PaymentBloc>().add(
                                                   PaymentEventPayInPix(
@@ -438,7 +465,8 @@ class _ConfirmPaymentMethodScreenState
                                                         const Duration(
                                                             milliseconds:
                                                                 2000));
-                                              } else {
+                                              }
+                                              if (widget.total > 20) {
                                                 Navigator.pushReplacement(
                                                     context,
                                                     PageTransition(
@@ -465,7 +493,8 @@ class _ConfirmPaymentMethodScreenState
                                               }
                                             }
                                             if (widget.payymentMethodID ==
-                                                'Cartao') {
+                                                    'Cartao' &&
+                                                widget.total > 20) {
                                               Navigator.pushReplacement(
                                                   context,
                                                   PageTransition(

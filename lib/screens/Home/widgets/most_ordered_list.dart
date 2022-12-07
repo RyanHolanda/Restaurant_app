@@ -15,9 +15,11 @@ class MostOrderedBurguersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 170,
+      height: 150,
       child: Padding(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(
+            top: 20,
+          ),
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -27,7 +29,7 @@ class MostOrderedBurguersList extends StatelessWidget {
                 (a, b) => b.orders.compareTo(a.orders),
               );
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: GestureDetector(
                   onTap: () {
                     itemsList.sort(
@@ -48,13 +50,13 @@ class MostOrderedBurguersList extends StatelessWidget {
                             type: PageTransitionType.rightToLeftWithFade));
                   },
                   child: SizedBox(
-                      height: 70,
-                      width: 150,
+                      height: 60,
+                      width: 130,
                       child: Stack(
                         fit: StackFit.expand,
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(15),
                             child: Image.network(
                               itemsList[index].image,
                               fit: BoxFit.cover,
@@ -62,7 +64,7 @@ class MostOrderedBurguersList extends StatelessWidget {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(18),
+                                borderRadius: BorderRadius.circular(15),
                                 gradient: const LinearGradient(
                                     colors: [Colors.black, Colors.transparent],
                                     begin: Alignment.bottomCenter,
@@ -73,6 +75,7 @@ class MostOrderedBurguersList extends StatelessWidget {
                                   alignment: Alignment.bottomCenter,
                                   child: Text(itemsList[index].name,
                                       style: GoogleFonts.inriaSans(
+                                          fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white))),
                             ),
