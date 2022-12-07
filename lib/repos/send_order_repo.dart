@@ -63,7 +63,7 @@ class SendOrderToProduction {
             "order_finished_cook": orderFinishedCook,
             "order_in_delivery": inDelivery,
             "order_completed": completed,
-            "order_total_price": total,
+            "order_total_price": total.toStringAsFixed(2),
             "client_pix_key": clientPIXKey,
             "client_will_pay": howMuchGonnaPay
           }),
