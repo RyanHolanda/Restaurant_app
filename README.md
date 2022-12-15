@@ -7,8 +7,7 @@ This is an delivery app built to improve my flutter skils at beginning. this app
 I decided to use firebase to this project 'cause the flutter and firebase works good together, and firebase has good and easy to implement database. And the best, firebase has a good free tier, where you can do almost anything.
 
 # API 
-
-I watched some videos on youtube and created an API in node.js, which I now almost nothing! but you can check that API on Restaurant_API repo
+When I was building the app for Windows, I realized Firebase doesn't support windows :( so I watched some videos on youtube and created an API in node.js, which I now almost nothing! but you can check that API on Restaurant_API repo
 
 # Functions
 
