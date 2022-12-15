@@ -21,3 +21,5 @@ I Also implemented some payment forms, the most interesting payment that I imple
 
 If you gonna test the app, the payments in PIX gonna generate a copy and paste key with R$ 0.01 to test the payment!
 
+You only can do orders if the store is open in the admin app!
+
