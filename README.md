@@ -17,3 +17,7 @@ In this app you can create an account, log-in on an existing account, add your a
 
 I Also implemented some payment forms, the most interesting payment that I implemented, is PIX, a common payment used in Brazil. To implement this, I used the Mercado Pago API
 
+# Notes
+
+If you gonna test the app, the payments in PIX gonna generate a copy and paste key with R$ 0.01 to test the payment!
+
