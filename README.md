@@ -1,5 +1,5 @@
-# Black Beard
+# Black Beard Burguer App
 
-A Delivery App Build in Flutter
+This is an delivery app built to improve my flutter skils at beginning. this app has no commercial porpouses, only for study. That's my first application built in Flutter and helped me a lot to understand how it all works! you can check release section to download the app for Android devices! you can download the admin app for windows too. The admin app receive orders from delivery apps, update menu, add and remove items from menu, and close/open the restaurant!
 
-# Reason
+# Functions
