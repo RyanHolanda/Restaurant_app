@@ -1,6 +1,6 @@
 # Black Beard
 
-A new Flutter project.
+A Delivery Flutter APP
 
 ## Getting Started
 
