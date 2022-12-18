@@ -64,7 +64,7 @@ _setHeaders() => {
       'authorization': productionKey
     };
 
-String productionKey =
-    'Bearer APP_USR-1397836893388541-112913-d98c9e794165101674f3a4c34b70db04-294877192';
+
+
 String testKey =
     'Bearer TEST-1397836893388541-112913-69c1db3a4fb79291d179a2f7c5b53729-294877192';
