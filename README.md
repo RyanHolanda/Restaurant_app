@@ -10,7 +10,7 @@ This is an delivery app built to improve my flutter skils at beginning. this app
      <td>Present day in purple and selected day in pink</td>
   </tr>
   <tr>
-    <td><img src="[https://user-images.githubusercontent.com/86686024/208271358-7a8127ce-0b48-42e6-93a3-c4798f9abc04.png]" width=270 height=480></td>
+    <td><img src="https://user-images.githubusercontent.com/86686024/208271358-7a8127ce-0b48-42e6-93a3-c4798f9abc04.png" width=270 height=480></td>
   </tr>
  </table>
 
