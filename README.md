@@ -35,7 +35,7 @@ I Also implemented some payment forms, the most interesting payment that I imple
 
 # State Management
 
-I used BloC to this app because that's the first state management that I Learned, and when I was developing, BloC was the only state management that I knew
+I used BloC to this app because that's the first state management that I Learned, and when I was developing, BloC was the only state management that I knew, so i decided to use BloC, and it helped me learn more about BloC
 
 # Notes
 
