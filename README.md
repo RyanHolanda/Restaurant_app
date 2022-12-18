@@ -5,12 +5,12 @@ This is an delivery app built to improve my flutter skils at beginning. this app
 
 <table>
   <tr>
-    <td>First Screen Page</td>
+    <td>Home Screen</td>
      <td>Holiday Mention</td>
      <td>Present day in purple and selected day in pink</td>
   </tr>
   <tr>
-    <td><img src="[screenshots/Screenshot_1582745092.png](https://user-images.githubusercontent.com/86686024/208271358-7a8127ce-0b48-42e6-93a3-c4798f9abc04.png)" width=270 height=480></td>
+    <td><img src="[https://user-images.githubusercontent.com/86686024/208271358-7a8127ce-0b48-42e6-93a3-c4798f9abc04.png]" width=270 height=480></td>
   </tr>
  </table>
 
