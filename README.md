@@ -3,10 +3,23 @@
 This is an delivery app built to improve my flutter skils at beginning. this app has no commercial porpouses, only for study. That's my first application built in Flutter and helped me a lot to understand how it all works! you can check release section to download the app for Android devices! you can download the admin app for windows too. The admin app receive orders from delivery apps, update menu, add and remove items from menu, and close/open the restaurant!. Black Beard Burguer is a restaurant next to my house and I decided to use their logos and burgers to feel creating a real project!
 
 
+<table>
+  <tr>
+    <td>First Screen Page</td>
+     <td>Holiday Mention</td>
+     <td>Present day in purple and selected day in pink</td>
+  </tr>
+  <tr>
+    <td><img src="[screenshots/Screenshot_1582745092.png](https://user-images.githubusercontent.com/86686024/208271358-7a8127ce-0b48-42e6-93a3-c4798f9abc04.png)" width=270 height=480></td>
+  </tr>
+ </table>
 
-![Apple 1](https://user-images.githubusercontent.com/86686024/208271358-7a8127ce-0b48-42e6-93a3-c4798f9abc04.png) |  ![Apple 2](https://user-images.githubusercontent.com/86686024/208271367-431c9881-f807-43da-9f53-566d8d530874.png)
+
+![Apple 1]()
+![Apple 2](https://user-images.githubusercontent.com/86686024/208271367-431c9881-f807-43da-9f53-566d8d530874.png)
 ![Apple 3](https://user-images.githubusercontent.com/86686024/208271371-9c086587-6ca7-4c66-baab-1f7b27324b2a.png)
 ![Apple 4](https://user-images.githubusercontent.com/86686024/208271372-eeb22813-a39f-4f97-92f1-91c91a52b52e.png)
+
 
 
 # Database
