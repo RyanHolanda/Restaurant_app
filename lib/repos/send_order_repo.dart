@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class SendOrderToProduction {
-  String url = 'https://black-beard-burguer-406f0.web.app/create/orders';
+  String url = '*****';
   String item;
   double total;
   String adress;
