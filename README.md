@@ -33,7 +33,7 @@ In this app you can create an account, log-in on an existing account, add your a
 
 I Also implemented some payment forms, the most interesting payment that I implemented, is PIX, a common payment used in Brazil. To implement this, I used the Mercado Pago API
 
-#State Management
+# State Management
 
 I used BloC to this app because that's the first state management that I Learned, and when I was developing, BloC was the only state management that I knew
 
