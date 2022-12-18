@@ -11,10 +11,10 @@ This is an delivery app built to improve my flutter skils at beginning. this app
      <td>User profile screen</td>
   </tr>
   <tr>
-    <td><img src="https://user-images.githubusercontent.com/86686024/208271358-7a8127ce-0b48-42e6-93a3-c4798f9abc04.png" width=300 height=300></td>
-    <td><img src="https://user-images.githubusercontent.com/86686024/208271367-431c9881-f807-43da-9f53-566d8d530874.png" width=300 height=300></td>
-    <td><img src="https://user-images.githubusercontent.com/86686024/208271371-9c086587-6ca7-4c66-baab-1f7b27324b2a.png" width=300 height=300 ></td>
-    <td><img src="https://user-images.githubusercontent.com/86686024/208271372-eeb22813-a39f-4f97-92f1-91c91a52b52e.png" width=300 height=300 ></td>
+    <td><img src="https://user-images.githubusercontent.com/86686024/208271358-7a8127ce-0b48-42e6-93a3-c4798f9abc04.png" width=300 height=400></td>
+    <td><img src="https://user-images.githubusercontent.com/86686024/208271367-431c9881-f807-43da-9f53-566d8d530874.png" width=300 height=400></td>
+    <td><img src="https://user-images.githubusercontent.com/86686024/208271371-9c086587-6ca7-4c66-baab-1f7b27324b2a.png" width=300 height=400 ></td>
+    <td><img src="https://user-images.githubusercontent.com/86686024/208271372-eeb22813-a39f-4f97-92f1-91c91a52b52e.png" width=300 height=400 ></td>
   </tr>
  </table>
 
