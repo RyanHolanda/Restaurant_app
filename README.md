@@ -36,9 +36,3 @@ I Also implemented some payment forms, the most interesting payment that I imple
 # State Management
 
 I used BloC to this app because that's the first state management that I Learned, and when I was developing, BloC was the only state management that I knew, so i decided to use BloC, and it helped me learn more about BloC
-
-# Notes
-
-If you gonna test the app, Payments in PIX gonna generate a copy and paste key with R$ 0.01 to test the payment!
-
-You only can do orders if the store is open, you can open/close store in the admin app
